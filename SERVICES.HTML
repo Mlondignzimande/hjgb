@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | GHURU Smart Nation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0a;
+            --accent: #c9a96e;
+            --accent-light: #e8d5a3;
+            --text: #f5f5f5;
+            --text-muted: #888;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #4ade80;
+            --deep-blue: #1e3a5f;
+
+            --white: #ffffff;
+            --red: #dc2626;
+            --blue-dark: #0f172a;
+            --blue-mid: #1e40af;
+            --blue-bright: #2563eb;
+            --blue-pale: #dbeafe;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === TOP EVENT BAR === */
+        .event-bar {
+            position: relative;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-bright) 100%);
+            padding: 14px 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .event-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-badge {
+            background: var(--red);
+            color: var(--white);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .event-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--white);
+        }
+
+        .event-text span {
+            color: var(--blue-pale);
+            font-weight: 600;
+        }
+
+        .event-cta {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .event-cta::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .event-cta:hover {
+            color: var(--blue-pale);
+        }
+
+        .event-cta:hover::after {
+            transform: translateX(4px);
+        }
+
+        .event-close {
+            position: absolute;
+            right: 40px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            padding: 4px;
+        }
+
+        .event-close:hover {
+            color: var(--white);
+        }
+
+        /* === NAVIGATION === */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(10, 22, 40, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+        
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+    
+        }
+
+        .logo-img::before {
+            content: 'G';
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-img::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .logo:hover .logo-img::after {
+            left: 100%;
+        }
+
+        .logo-text span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--blue-bright);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--blue-dark);
+            background: var(--blue-pale);
+        }
+
+        .nav-link:hover::before {
+            width: 60%;
+        }
+
+        .nav-link.active {
+            color: var(--blue-bright);
+            background: var(--blue-pale);
+        }
+
+        .nav-link.active::before {
+            width: 60%;
+        }
+
+        .nav-link.special {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--blue-bright);
+        }
+
+        .nav-link.special:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0.08));
+            border-color: var(--blue-bright);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .nav-link .icon {
+            font-size: 1rem;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover .icon {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--blue-dark);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 16px 32px;
+            color: var(--blue-dark);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            background: linear-gradient(180deg, var(--blue-pale) 0%, var(--white) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--blue-dark);
+        }
+
+        .hero h1 span {
+            color: var(--blue-bright);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        .hero .cta-btn {
+            margin-top: 40px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(37, 99, 235, 0.3);
+            display: inline-block;
+        }
+
+        .hero .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        /* === SCHEDULE SECTION === */
+        .schedule-section {
+            background: var(--blue-dark);
+            padding: 80px 40px;
+        }
+
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .section-header h2 span {
+            color: var(--blue-bright);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .schedule-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .schedule-card.featured {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.02));
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .schedule-card.featured::before {
+            content: 'Live Now';
+            position: absolute;
+            top: -12px;
+            right: 30px;
+            background: var(--success);
+            color: var(--blue-dark);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .schedule-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .schedule-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .schedule-time {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--blue-bright);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .schedule-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .schedule-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .schedule-days span {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* === SERVICES GRID === */
+        .services-section {
+            padding: 100px 40px;
+            background: var(--primary);
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(201, 169, 110, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-card.featured {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
+            border-color: rgba(37, 99, 235, 0.25);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .service-tag {
+            display: inline-block;
+            background: rgba(74, 222, 128, 0.1);
+            color: var(--success);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .service-tag.purple {
+            background: rgba(139, 92, 246, 0.1);
+            color: #a78bfa;
+        }
+
+        .service-tag.gold {
+            background: rgba(201, 169, 110, 0.1);
+            color: var(--accent);
+        }
+
+        /* === STRUCTURE SECTION === */
+        .structure-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--blue-dark) 100%);
+            padding: 100px 40px;
+        }
+
+        .structure-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .structure-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .structure-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .structure-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+        }
+
+        .structure-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--blue-bright);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .structure-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .structure-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* === VARSITY SUPPORT SECTION === */
+        .varsity-section {
+            padding: 100px 40px;
+            background: var(--primary);
+        }
+
+        .varsity-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .varsity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .varsity-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+        }
+
+        .varsity-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(74, 222, 128, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .varsity-card.free {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), rgba(74, 222, 128, 0.02));
+            border-color: rgba(74, 222, 128, 0.25);
+        }
+
+        .varsity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .varsity-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .varsity-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .varsity-badge {
+            display: inline-block;
+            background: var(--success);
+            color: var(--blue-dark);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        /* === STEP BY STEP SECTION === */
+        .step-section {
+            background: linear-gradient(180deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+            padding: 100px 40px;
+        }
+
+        .step-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step-timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 40px;
+        }
+
+        .step-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--blue-bright), var(--accent));
+        }
+
+        .step-item {
+            position: relative;
+            padding: 30px 0 30px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 36px;
+            width: 12px;
+            height: 12px;
+            background: var(--blue-bright);
+            border-radius: 50%;
+            border: 3px solid var(--blue-dark);
+            box-shadow: 0 0 0 3px var(--blue-bright);
+        }
+
+        .step-item h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .step-item p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* === CONTACT SECTION === */
+        .contact-section {
+            padding: 100px 40px;
+            background: var(--primary);
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .contact-section h2 span {
+            color: var(--blue-bright);
+        }
+
+        .contact-section .lead {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .contact-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 24px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .contact-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .contact-card .detail {
+            color: var(--blue-bright);
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 8px;
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+        }
+
+        .cta-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-section .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--blue-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        .cta-section .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(201, 169, 110, 0.4);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .footer-logo span {
+            color: var(--red);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-schools {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .footer-schools span {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* === SCROLL ANIMATIONS === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .event-close {
+                right: 20px;
+            }
+
+            .event-content {
+                padding: 0 20px;
+                flex-wrap: wrap;
+                text-align: center;
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .structure-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .varsity-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .event-text {
+                font-size: 0.8rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .structure-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .varsity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-card,
+            .service-card,
+            .varsity-card,
+            .contact-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+    <!-- Top Event Bar -->
+    <div class="event-bar" id="eventBar">
+        <div class="event-content">
+            <span class="event-badge">Upcoming</span>
+            <span class="event-text">
+                🚀 <span>10 Hours of Commerce, Humanities and Science 2026</span> — Dumabezwe High School, 5th July 2026, 7am-5pm
+            </span>
+            <a href="#" class="event-cta">Register Now</a>
+            <button class="event-close" onclick="closeEventBar()" aria-label="Close announcement">×</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="GHURU.png" alt="GHURU"
+             class="logo-img">
+            </a>
+
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <span class="icon">⌂</span> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="ABOUT_US.HTML" class="nav-link">
+                        <span class="icon"></span> About Us
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="SERVICES.HTML" class="nav-link active">
+                        <span class="icon"></span> Our Services
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="blog.html" class="nav-link">
+                        <span class="icon"></span> Blog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="aps.html" class="nav-link special">
+                        <span class="icon"></span> APS Calculator
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="CONTACT.HTML" class="nav-link">
+                        <span class="icon"></span> Contact Us
+                    </a>
+                </li>
+            </ul>
+
+            <button class="mobile-toggle" id="mobileToggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="ABOUT_US.HTML" class="nav-link">About Us</a>
+        <a href="SERVICES.HTML" class="nav-link active">Our Services</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="aps.html" class="nav-link special">APS Calculator</a>
+        <a href="CONTACT.HTML" class="nav-link">Contact Us</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Everything Your Child Needs to <span>Succeed</span></h1>
+        <p>From daily online classes to varsity applications — we don't just tutor, we walk every step of the journey with you. Our tutors are waiting to pave your way, taking you step by step until you understand.</p>
+        <a href="https://wa.me/27610924423" class="cta-btn">Book Your Spot Now</a>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="schedule-section">
+        <div class="schedule-container">
+            <div class="section-header">
+                <div class="section-label">Class Schedule</div>
+                <h2>Structured Learning, <span>Consistent Results</span></h2>
+            </div>
+            <div class="schedule-grid">
+                <div class="schedule-card featured fade-in">
+                    <div class="schedule-icon">💻</div>
+                    <h3>Online Classes</h3>
+                    <span class="schedule-time">16:00 – 21:00</span>
+                    <p>Live, interactive online sessions with expert tutors covering the full curriculum. Real-time Q&A, digital whiteboards, and recorded sessions for revision.</p>
+                    <div class="schedule-days">
+                        <span>Monday</span>
+                        <span>Tuesday</span>
+                        <span>Wednesday</span>
+                        <span>Thursday</span>
+                        <span>Friday</span>
+                         <span>Saturday</span>
+                        <span>Sunday</span>
+                    </div>
+                </div>
+                <div class="schedule-card fade-in">
+                    <div class="schedule-icon">📝</div>
+                    <h3>Homework Hour</h3>
+                    <span class="schedule-time">18:00 – 19:00</span>
+                    <p>Dedicated time every day for learners to complete homework with tutor supervision. Get help the moment you get stuck — no more struggling alone at night.</p>
+                    <div class="schedule-days">
+                        <span>Monday</span>
+                        <span>Tuesday</span>
+                        <span>Wednesday</span>
+                        <span>Thursday</span>
+                        <span>Friday</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <div class="section-header">
+                <div class="section-label">What We Offer</div>
+                <h2>Comprehensive Support for <span>Every Learner</span></h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card featured fade-in">
+                    <span class="service-icon">📚</span>
+                    <span class="service-tag">Core Service</span>
+                    <h3>Exam Preparation</h3>
+                    <p>Intensive revision sessions before every major exam. We break down past papers, identify recurring question patterns, and teach exam technique — not just content.</p>
+                </div>
+                <div class="service-card featured fade-in">
+                    <span class="service-icon">🧪</span>
+                    <span class="service-tag">Core Service</span>
+                    <h3>Test Preparation</h3>
+                    <p>Targeted prep for class tests, controlled tests, and prelims. We align with your school's test schedule so you're never caught off guard.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <span class="service-icon">☀️</span>
+                    <span class="service-tag purple">Intensive</span>
+                    <h3>Cross Day Studies</h3>
+                    <p>Full-day study marathons during school holidays and weekends. Deep-dive into challenging topics with breaks, meals, and group collaboration built in.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <span class="service-icon">🌙</span>
+                    <span class="service-tag purple">Intensive</span>
+                    <h3>Cross Night Studies</h3>
+                    <p>Evening study sessions that stretch into the night for matrics and exam candidates. Quiet, focused environment with tutors on standby until the last learner leaves.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <span class="service-icon">📖</span>
+                    <span class="service-tag">Structured</span>
+                    <h3>3 Lessons Per Week</h3>
+                    <p>Per subject, per grade — no gaps, no rushing. A carefully paced curriculum that ensures mastery before moving forward. Consistency beats intensity.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <span class="service-icon">🎓</span>
+                    <span class="service-tag gold">Free for Members</span>
+                    <h3>Varsity Applications</h3>
+                    <p>We handle the paperwork, deadlines, and requirements for university applications — completely free for all GHURU members. CAO, NSFAS, and direct applications covered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Structure Section -->
+    <section class="structure-section">
+        <div class="structure-container">
+            <div class="section-header">
+                <div class="section-label">How It Works</div>
+                <h2>3 Lessons Per Week, <span>Every Subject, Every Grade</span></h2>
+            </div>
+            <div class="structure-grid">
+                <div class="structure-card fade-in">
+                    <div class="structure-number">01</div>
+                    <h3>Concept Introduction</h3>
+                    <p>New topic introduced with clear explanations, visual aids, and real-world examples. No learner left behind.</p>
+                </div>
+                <div class="structure-card fade-in">
+                    <div class="structure-number">02</div>
+                    <h3>Guided Practice</h3>
+                    <p>Work through problems together with tutor support. Ask questions, make mistakes, and learn from them in real time.</p>
+                </div>
+                <div class="structure-card fade-in">
+                    <div class="structure-number">03</div>
+                    <h3>Independent Application</h3>
+                    <p>Solo exercises to build confidence. Tutors circulate, check understanding, and provide one-on-one help where needed.</p>
+                </div>
+                <div class="structure-card fade-in">
+                    <div class="structure-number">04</div>
+                    <h3>Review & Reinforce</h3>
+                    <p>Weekly recap, error analysis, and targeted revision of weak areas. Mastery before momentum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Varsity Support Section -->
+    <section class="varsity-section">
+        <div class="varsity-container">
+            <div class="section-header">
+                <div class="section-label">Beyond the Classroom</div>
+                <h2>Your Bridge to <span>University & Career</span></h2>
+            </div>
+            <div class="varsity-grid">
+                <div class="varsity-card free fade-in">
+                    <span class="varsity-badge">Free for Members</span>
+                    <span class="varsity-icon">🎓</span>
+                    <h3>Varsity Applications</h3>
+                    <p>We complete and submit university applications on your behalf. CAO, NSFAS, bursary forms — all handled. You focus on passing, we handle the paperwork.</p>
+                </div>
+                <div class="varsity-card free fade-in">
+                    <span class="varsity-badge">Free for Members</span>
+                    <span class="varsity-icon">🧭</span>
+                    <h3>Career Guidance</h3>
+                    <p>Not sure what to study? We assess your strengths, interests, and marks to recommend career paths and suitable qualifications. Informed decisions, not guesses.</p>
+                </div>
+                <div class="varsity-card free fade-in">
+                    <span class="varsity-badge">Free for Members</span>
+                    <span class="varsity-icon">💰</span>
+                    <h3>Bursary & Scholarship Applications</h3>
+                    <p>We identify funding opportunities matched to your profile and assist with every application. From NSFAS to private bursaries — we maximise your chances.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step by Step Section -->
+    <section class="step-section">
+        <div class="step-container">
+            <div class="section-header">
+                <div class="section-label">Our Approach</div>
+                <h2>Step by Step, Until You <span>Understand</span></h2>
+            </div>
+            <div class="step-timeline">
+                <div class="step-item fade-in">
+                    <h3>Step 1: We Assess Where You Are</h3>
+                    <p>No assumptions. We diagnose your current level, identify knowledge gaps from previous grades, and understand your learning style. Every learner gets a personalised starting point.</p>
+                </div>
+                <div class="step-item fade-in">
+                    <h3>Step 2: We Fill the Gaps</h3>
+                    <p>Before pushing new content, we patch the foundation. A learner struggling with Grade 12 calculus often has a Grade 10 algebra gap. We find it and fix it.</p>
+                </div>
+                <div class="step-item fade-in">
+                    <h3>Step 3: We Teach at Your Pace</h3>
+                    <p>Our tutors don't rush to finish the syllabus. They stay on a topic until you get it. Questions are encouraged. Confusion is addressed immediately. No one is left behind.</p>
+                </div>
+                <div class="step-item fade-in">
+                    <h3>Step 4: We Provide All Resources</h3>
+                    <p>Study guides, past papers, summary notes, video recordings, and practice questions — everything you need is provided. You don't need to buy extra books or search the internet.</p>
+                </div>
+                <div class="step-item fade-in">
+                    <h3>Step 5: We Track & Adjust</h3>
+                    <p>Monthly progress reviews, test result analysis, and parent feedback sessions. If something isn't working, we change it. Your success is our only metric.</p>
+                </div>
+                <div class="step-item fade-in">
+                    <h3>Step 6: We Walk You to Varsity</h3>
+                    <p>From APS score tracking to application submissions to bursary hunting — we don't stop at the classroom door. We walk with you until you're seated in your first lecture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="section-label">Get Started</div>
+            <h2>Book Your Spot <span>Today</span></h2>
+            <p class="lead">The tutor is waiting to pave your way. Take the first step — call, WhatsApp, or email us now. Spaces are limited and fill fast.</p>
+            <div class="contact-grid">
+                <a href="tel:0610924423" class="contact-card fade-in">
+                    <span class="contact-icon">📞</span>
+                    <h3>Call Us</h3>
+                    <p>Speak directly to our team</p>
+                    <p class="detail">061 092 4423</p>
+                </a>
+                <a href="https://wa.me/27610924423" class="contact-card fade-in">
+                    <span class="contact-icon">💬</span>
+                    <h3>WhatsApp</h3>
+                    <p>Quick response, any time</p>
+                    <p class="detail">061 092 4423</p>
+                </a>
+                <a href="mailto:admin@gsn.org.za" class="contact-card fade-in">
+                    <span class="contact-icon">✉️</span>
+                    <h3>Email</h3>
+                    <p>Send us your questions</p>
+                    <p class="detail">admin@gsn.org.za</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Your Future Starts with One Decision</h2>
+        <p>Join 1000+ learners who chose consistency, support, and results. The tutor is waiting — are you ready?</p>
+        <a href="tel:0610924423" class="cta-btn">Call 061 092 4423</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">GHURU<span>.</span></div>
+        <p>Transforming education in KwaZulu-Natal, Gauteng, Eastern Cape and Western Cape since 2023</p>
+        <p>Cross Night Studies · Cross Day Studies · Online Classes · Exam Revision</p>
+        <div class="footer-schools">
+            <span>Dumabezwe High</span>
+            <span>Mdingi High</span>
+            <span>Dingeka High</span>
+            <span>Dlangani School</span>
+            <span>Masamini High</span>
+        </div>
+    </footer>
+
+    <script>
+        function closeEventBar() {
+            document.getElementById('eventBar').style.display = 'none';
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.getElementById('mobileToggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | GHURU Smart Nation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #0a0a0a; --accent: #c9a96e; --accent-light: #e8d5a3;
+            --text: #f5f5f5; --text-muted: #888; --glass: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.08); --success: #4ade80; --deep-blue: #1e3a5f;
+            --white: #ffffff; --red: #dc2626; --blue-dark: #0f172a; --blue-mid: #1e40af;
+            --blue-bright: #2563eb; --blue-pale: #dbeafe; --gray-200: #e5e7eb; --gray-600: #4b5563;
+            --purple: #8b5cf6; --teal: #14b8a6; --pink: #ec4899;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--primary); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+
+        /* === TOP EVENT BAR === */
+        .event-bar { position: relative; background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-bright) 100%); padding: 14px 0; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .event-bar::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); animation: shimmer 4s infinite; }
+        @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
+        .event-content { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: center; gap: 20px; position: relative; z-index: 1; }
+        .event-badge { background: var(--red); color: var(--white); padding: 4px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; animation: pulse 2s infinite; flex-shrink: 0; }
+        @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.9; } }
+        .event-text { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; color: var(--white); }
+        .event-text span { color: var(--blue-pale); font-weight: 600; }
+        .event-cta { color: var(--white); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; position: relative; flex-shrink: 0; }
+        .event-cta::after { content: '→'; transition: transform 0.3s ease; }
+        .event-cta:hover { color: var(--blue-pale); }
+        .event-cta:hover::after { transform: translateX(4px); }
+        .event-close { position: absolute; right: 40px; background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 1.2rem; transition: color 0.3s; padding: 4px; }
+        .event-close:hover { color: var(--white); }
+
+        /* === NAVIGATION === */
+        .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--gray-200); transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .navbar.scrolled { background: rgba(255,255,255,0.98); box-shadow: 0 4px 30px rgba(10,22,40,0.08); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 80px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; position: relative; }
+        .logo-img { width: 50px; height: 50px; object-fit: contain; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: bold; color: #0066ff; letter-spacing: -0.5px; }
+        .logo-text span { color: var(--red); }
+        .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
+        .nav-link { display: flex; align-items: center; gap: 6px; padding: 10px 18px; text-decoration: none; color: var(--gray-600); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.3px; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--blue-bright); transition: all 0.3s cubic-bezier(0.4,0,0.2,1); transform: translateX(-50%); border-radius: 2px; }
+        .nav-link:hover { color: var(--blue-dark); background: var(--blue-pale); }
+        .nav-link:hover::before { width: 60%; }
+        .nav-link.active { color: var(--blue-bright); background: var(--blue-pale); }
+        .nav-link.active::before { width: 60%; }
+        .nav-link.special { background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(37,99,235,0.05)); border: 1px solid rgba(37,99,235,0.2); color: var(--blue-bright); }
+        .nav-link.special:hover { background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(37,99,235,0.08)); border-color: var(--blue-bright); box-shadow: 0 4px 20px rgba(37,99,235,0.12); }
+        .mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+        .mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--blue-dark); border-radius: 2px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); transform-origin: center; }
+        .mobile-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .mobile-toggle.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .mobile-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(255,255,255,0.98); backdrop-filter: blur(30px); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; transition: right 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .mobile-menu.open { right: 0; }
+        .mobile-menu .nav-link { font-size: 1.5rem; font-family: 'Space Grotesk', sans-serif; padding: 16px 32px; color: var(--blue-dark); }
+
+        /* === HERO === */
+        .hero { min-height: 75vh; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 100px 20px 60px; position: relative; background: linear-gradient(180deg, var(--blue-pale) 0%, var(--white) 100%); }
+        .hero .meta { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; }
+        .hero .meta span { background: var(--blue-bright); color: var(--white); padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .hero .meta .date { background: transparent; color: var(--gray-600); border: 1px solid var(--gray-200); }
+        .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; color: var(--blue-dark); max-width: 900px; }
+        .hero h1 span { color: var(--blue-bright); }
+        .hero .subtitle { font-size: 1.2rem; color: var(--gray-600); max-width: 700px; line-height: 1.7; margin-bottom: 30px; }
+        .hero .author { display: flex; align-items: center; gap: 12px; color: var(--gray-600); font-size: 0.9rem; }
+        .hero .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid)); display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+
+        /* === SECTIONS === */
+        .content-section { max-width: 1100px; margin: 0 auto; padding: 100px 40px; }
+        .section-header { margin-bottom: 40px; text-align: center; }
+        .section-label { display: inline-block; background: var(--glass); border: 1px solid var(--border); color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+        .section-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text); line-height: 1.2; }
+        .section-header h2 span { color: var(--blue-bright); }
+        .section-header p { color: var(--text-muted); font-size: 1rem; margin-top: 10px; max-width: 650px; margin-left: auto; margin-right: auto; }
+
+        /* === STORY === */
+        .story-block p { color: var(--text-muted); margin-bottom: 16px; font-size: 1.05rem; line-height: 1.8; }
+        .story-block strong { color: var(--text); }
+        .story-block .lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+
+        /* === STATS BAR === */
+        .stats-section { background: var(--blue-dark); padding: 60px 40px; }
+        .stats-bar { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; }
+        .stat-item { padding: 20px; }
+        .stat-number { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: var(--white); line-height: 1; }
+        .stat-number span { color: var(--blue-bright); font-size: 2rem; }
+        .stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 8px; letter-spacing: 0.5px; }
+
+        /* === VALUES === */
+        .values-section { padding: 100px 40px; background: var(--primary); }
+        .values-container { max-width: 1200px; margin: 0 auto; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .value-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 30px; transition: all 0.3s ease; text-align: center; }
+        .value-card:hover { transform: translateY(-6px); border-color: rgba(37,99,235,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .value-icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+        .value-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+        .value-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+        /* === TEAM INTRO === */
+        .team-intro-section { background: linear-gradient(180deg, var(--primary) 0%, var(--blue-dark) 100%); padding: 100px 40px; }
+        .team-intro-container { max-width: 900px; margin: 0 auto; text-align: center; }
+        .team-intro-container h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text); margin-bottom: 24px; line-height: 1.2; }
+        .team-intro-container h2 span { color: var(--blue-bright); }
+        .team-intro-container p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 16px; }
+        .team-intro-container strong { color: var(--text); }
+
+        /* === TUTORS === */
+        .tutors-section { padding: 100px 40px; background: var(--primary); }
+        .tutors-container { max-width: 1400px; margin: 0 auto; }
+        .tutors-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-top: 40px; }
+        .tutor-card { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 28px 20px; text-align: center; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .tutor-card:hover { transform: translateY(-6px); border-color: rgba(37,99,235,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .tutor-card.featured { background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.02)); border-color: rgba(37,99,235,0.25); }
+        .tutor-card.featured::before { content: 'Admin'; position: absolute; top: -1px; right: 16px; background: var(--blue-bright); color: var(--white); padding: 3px 12px; border-radius: 0 0 8px 8px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .tutor-avatar { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--white); position: relative; }
+        .tutor-avatar::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid transparent; transition: all 0.3s; }
+        .tutor-card:hover .tutor-avatar::after { border-color: var(--blue-bright); }
+        .tutor-card h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+        .tutor-courses { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+        .tutor-course { background: rgba(37,99,235,0.1); color: var(--blue-bright); padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 500; }
+        .tutor-course.gold { background: rgba(201,169,110,0.1); color: var(--accent); }
+        .tutor-course.purple { background: rgba(139,92,246,0.1); color: var(--purple); }
+        .tutor-course.teal { background: rgba(20,184,166,0.1); color: var(--teal); }
+        .tutor-course.pink { background: rgba(236,72,153,0.1); color: var(--pink); }
+
+        /* === TRAINING SECTION === */
+        .training-section { background: linear-gradient(180deg, var(--blue-dark) 0%, var(--deep-blue) 100%); padding: 100px 40px; }
+        .training-container { max-width: 1200px; margin: 0 auto; }
+        .training-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .training-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 30px; transition: all 0.3s ease; }
+        .training-card:hover { transform: translateY(-6px); border-color: rgba(37,99,235,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .training-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .training-card h3 .num { color: var(--blue-bright); font-size: 1.4rem; }
+        .training-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+        .training-card ul { list-style: none; margin-top: 16px; }
+        .training-card ul li { color: var(--text-muted); font-size: 0.9rem; padding: 6px 0; padding-left: 20px; position: relative; }
+        .training-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+
+        /* === ACCESS SECTION === */
+        .access-section { padding: 100px 40px; background: var(--primary); }
+        .access-container { max-width: 1200px; margin: 0 auto; }
+        .access-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+        .access-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px; transition: all 0.3s ease; }
+        .access-card:hover { transform: translateY(-6px); border-color: rgba(37,99,235,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .access-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .access-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+        .access-card .highlight { color: var(--blue-bright); font-weight: 600; }
+
+        /* === TESTIMONIAL === */
+        .testimonial-section { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--deep-blue) 100%); padding: 100px 40px; text-align: center; }
+        .testimonial-container { max-width: 800px; margin: 0 auto; }
+        .testimonial-section blockquote { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 500; color: var(--white); line-height: 1.6; margin-bottom: 24px; font-style: italic; }
+        .testimonial-section cite { display: block; color: var(--blue-bright); font-style: normal; font-weight: 600; font-size: 1rem; }
+        .testimonial-section .role { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 4px; }
+
+        /* === CTA === */
+        .cta-section { padding: 100px 40px; text-align: center; background: linear-gradient(135deg, var(--blue-dark) 0%, var(--deep-blue) 100%); }
+        .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 700; color: var(--white); margin-bottom: 16px; }
+        .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 32px; }
+        .cta-section .cta-btn { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: var(--blue-dark); text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 1rem; transition: all 0.3s; box-shadow: 0 4px 30px rgba(201,169,110,0.3); }
+        .cta-section .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,169,110,0.4); }
+
+        /* === FOOTER === */
+        .footer { padding: 60px 40px; text-align: center; background: var(--primary); border-top: 1px solid var(--border); }
+        .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+        .footer-logo span { color: var(--red); }
+        .footer p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px; }
+        .footer-schools { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+        .footer-schools span { background: var(--glass); border: 1px solid var(--border); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* === SCROLL ANIMATIONS === */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1200px) { .tutors-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 1024px) {
+            .nav-links { display: none; } .mobile-toggle { display: flex; }
+            .event-close { right: 20px; } .event-content { padding: 0 20px; flex-wrap: wrap; text-align: center; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .values-grid { grid-template-columns: repeat(2, 1fr); }
+            .tutors-grid { grid-template-columns: repeat(3, 1fr); }
+            .training-grid { grid-template-columns: repeat(2, 1fr); }
+            .access-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .values-grid { grid-template-columns: 1fr; }
+            .tutors-grid { grid-template-columns: repeat(2, 1fr); }
+            .training-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .nav-container { padding: 0 20px; height: 70px; } .logo-text { font-size: 1.3rem; }
+            .hero { padding: 60px 20px 40px; }
+            .content-section { padding: 60px 20px; }
+            .stats-bar { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .stat-number { font-size: 2rem; }
+            .tutors-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Event Bar -->
+    <div class="event-bar" id="eventBar">
+        <div class="event-content">
+            <span class="event-badge">Upcoming</span>
+            <span class="event-text">🚀 <span>10 Hours of Commerce, Humanities and Science 2026</span> — Dumabezwe High School, 5th July 2026, 7am-5pm</span>
+            <a href="#" class="event-cta">Register Now</a>
+            <button class="event-close" onclick="closeEventBar()" aria-label="Close announcement">×</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="HOME.HTML" class="logo">
+                <img src="GHURU.png" alt="GHURU" class="logo-img">
+            
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="HOME.HTML" class="nav-link"><span class="icon">⌂</span> Home</a></li>
+                <li class="nav-item"><a href="ABOUT_US.HTML" class="nav-link active">About Us</a></li>
+                <li class="nav-item"><a href="SERVICES.HTML" class="nav-link">Our Services</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="aps.html" class="nav-link special">APS Calculator</a></li>
+                <li class="nav-item"><a href="CONTACT.HTML" class="nav-link">Contact Us</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="ABOUT_US.HTML" class="nav-link active">About Us</a>
+        <a href="SERVICES.HTML" class="nav-link">Our Services</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="aps.html" class="nav-link special">APS Calculator</a>
+        <a href="CONTACT.HTML" class="nav-link">Contact Us</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="meta">
+            <span>About Ghuru Smart Nation</span>
+            <span class="date">Since 2023</span>
+        </div>
+        <h1>The People Who Change <span>Marks</span> — And Lives</h1>
+        <p class="subtitle">45 hand-picked tutors. Varsity students who remember the pressure. Employed teachers with 100% pass rates. One mission: your success.</p>
+        <div class="author">
+            <div class="author-avatar">NZ</div>
+            <div>
+                <div style="font-weight: 600; color: var(--blue-dark);"> Mlondi Nzimande</div>
+                <div style="font-size: 0.8rem;">Founder, GHURU Smart Nation</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <article class="content-section">
+        <div class="story-block fade-in">
+            <div class="section-header">
+                <div class="section-label">Our Story</div>
+                <h2>Built on Belief, Backed by <span>Results</span></h2>
+            </div>
+            <p class="lead">Ghuru Smart Nation was never meant to be just another tutoring service. It was built because we saw learners falling through cracks that were years wide — and we refused to accept that as inevitable.</p>
+            <p>We started in 2023 with a simple conviction: <strong>every learner can pass with 60%+</strong> if they have the right support, the right consistency, and the right people walking beside them. Not for an hour. Not for a session. For the entire journey.</p>
+            <p>Today, we serve <strong>10+ schools across KwaZulu-Natal, Eastern Cape, Gauteng and Western Cape</strong> — Dumabezwe High, Mdingi High, Dingeka High, Dlangani School, and Masamini High. We've reached over <strong>1,000 learners</strong>. We've watched repeat students walk into university lecture halls. We've seen 23% turn into 68%.</p>
+            <p>And we are only beginning.</p>
+        </div>
+    </article>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="stats-bar">
+            <div class="stat-item fade-in">
+                <div class="stat-number">45</div>
+                <div class="stat-label">Expert Tutors</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">1000<span>+</span></div>
+                <div class="stat-label">Learners Reached</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Schools in South Africa</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">100<span>%</span></div>
+                <div class="stat-label">Pass Rate Belief</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="values-section">
+        <div class="values-container">
+            <div class="section-header">
+                <div class="section-label">What Drives Us</div>
+                <h2>Our Core <span>Values</span></h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card fade-in">
+                    <span class="value-icon">🎯</span>
+                    <h3>Excellence, Not Mediocrity</h3>
+                    <p>We do not settle for "just passing." We train our tutors to push every learner toward distinction. A child who has waited years to be seen deserves nothing less than excellence.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <span class="value-icon">🤝</span>
+                    <h3>Relatability Meets Credibility</h3>
+                    <p>Our team blends varsity students who recently walked the matric path with employed teachers who have produced 100% pass rates for multiple years. You get both understanding and expertise.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <span class="value-icon">📈</span>
+                    <h3>Consistency Over Intensity</h3>
+                    <p>Transformation doesn't happen in 60-minute increments. It happens through month-after-month commitment, tracking, and adjustment. We show up until you succeed.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <span class="value-icon">🚪</span>
+                    <h3>Access for Everyone</h3>
+                    <p>From R150 per month for Grade 8 learners to R400 for upgrading students, we keep fees low and value high. No learner is turned away because of cost.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <span class="value-icon">🧭</span>
+                    <h3>Beyond the Classroom</h3>
+                    <p>APS tracking, varsity applications, bursary support, career guidance — we don't stop at the school gate. We walk with you until you're seated in your first lecture.</p>
+                </div>
+                <div class="value-card fade-in">
+                    <span class="value-icon">💡</span>
+                    <h3>Belief in Change</h3>
+                    <p>"A man can change." This is not a slogan. It is the foundation of everything we do. We have seen it happen — repeatedly, consistently, undeniably.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Intro -->
+    <section class="team-intro-section">
+        <div class="team-intro-container">
+            <div class="section-label">Our People</div>
+            <h2>45 Tutors. One <span>Mission.</span></h2>
+            <p>Our tutors are not casual hires. They are <strong>experienced educators</strong> who understand what is at stake. Varsity students who remember the battlefield of matric. Employed teachers with proven track records — many having achieved <strong>100% pass rates</strong> for multiple consecutive years.</p>
+            <p>They are well-trained, fully accessible, and deeply invested in every learner who walks through our doors. When you join GHURU, you don't get a tutor. You get a <strong>team</strong> committed to your transformation.</p>
+        </div>
+    </section>
+
+    <!-- Tutors -->
+    <section class="tutors-section">
+        <div class="tutors-container">
+            <div class="section-header">
+                <div class="section-label">Meet the Team</div>
+                <h2>Our <span>45 Tutors</span></h2>
+                <p>Each tutor brings expertise, passion, and a proven commitment to learner success. Hover to see their specialisation.</p>
+            </div>
+            <div class="tutors-grid">
+                <div class="tutor-card featured fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));">AM</div>
+                    <h4>Mlondi Nzimande</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Group Admin</span>
+                        <span class="tutor-course gold">Leadership</span>
+                        <span class="tutor-course">Operations</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, var(--purple), #6d28d9);">AJ</div>
+                    <h4>Aphelele Mjandana</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course purple">Physical Sciences</span>
+                        <span class="tutor-course">Life Sciences</span>
+                        <span class="tutor-course">Agricultural Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, var(--teal), #0d9488);">AV</div>
+                    <h4>Aphelele Magoso</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Tourism</span>
+                        <span class="tutor-course">English</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, var(--pink), #db2777);">AP</div>
+                    <h4>Aphiwe Phungula</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course pink">English</span>
+                        <span class="tutor-course">History</span>
+                        <span class="tutor-course">Geography</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">AD</div>
+                    <h4>Asiphe Dlamini</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Tourism</span>
+                        <span class="tutor-course">Geography</span>
+                        <span class="tutor-course">English</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">AD</div>
+                    <h4>Asiphe Mkhize</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                       
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AM</div>
+                    <h4>Aslam Mtolo</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Technical Sciences</span>
+                        <span class="tutor-course">Technical Mathematics</span>
+                  
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">AK</div>
+                    <h4>Ayanda Khambule</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">English</span>
+                        <span class="tutor-course">History</span>
+                        <span class="tutor-course pink">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ef4444, #dc2626);">BM</div>
+                    <h4>Menzi Gumede</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                      
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));">GS</div>
+                    <h4>Akhona Mantsi</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course gold">Physical Sciences</span>
+                      
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">IN</div>
+                    <h4>Nqobani Imvana Nxele</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Life Sciences</span>
+                        <span class="tutor-course">Geography</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f97316, #ea580c);">JD</div>
+                    <h4>Jaden Ayabonga Dlamini</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                        <span class="tutor-course">Information Technology</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #84cc16, #65a30d);">KS</div>
+                    <h4>Simamane Siphesihle</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Mathematics</span>
+                     
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #a855f7, #9333ea);">KN</div>
+                    <h4>Khawula Ndumiso</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematics</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">LN</div>
+                    <h4>Lindelwa Ndlovu</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course pink">Life Sciences</span>
+                        <span class="tutor-course">History</span>
+                        <span class="tutor-course">Geography</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);">LK</div>
+                    <h4>Luhle Kelly Khumalo</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">English</span>
+                        <span class="tutor-course">Life Sciences</span>
+                        <span class="tutor-course">Geography</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">LS</div>
+                    <h4>Lungelo Shabane</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">LM</div>
+                    <h4>Lusanele Luthando Mchunu</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">English</span>
+                        <span class="tutor-course">History</span>
+                        <span class="tutor-course">Geography</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">LD</div>
+                    <h4>Luyanda Kwanele Dlamini</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">LM</div>
+                    <h4>Luyanda Maza</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">Mathematics</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">LM</div>
+                    <h4>Lwandle Mkhize</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                        
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ef4444, #dc2626);">MM</div>
+                    <h4>Mr Majola</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Geography</span>
+                        <span class="tutor-course">History</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">MA</div>
+                    <h4>Khwela Asiphile</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">English</span>
+                        <span class="tutor-course">History</span>
+                        <span class="tutor-course pink">Geography</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">MN</div>
+                    <h4>Makwenza Nosihle</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course pink">Geography</span>
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f97316, #ea580c);">MN</div>
+                    <h4>Ndlovu Thandokuhle</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Geography</span>
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">MM</div>
+                    <h4>Mfanello Mpendulo Memela</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Economics</span>
+                        <span class="tutor-course">Mathematical Literacy</span>
+                        <span class="tutor-course">Business Studies</span>
+                        <span class="tutor-course">Accounting</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #a855f7, #9333ea);">MO</div>
+                    <h4>Monde Dlamini</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);">MM</div>
+                    <h4>Anele Thusi</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Business Studies</span>
+                        <span class="tutor-course">Accounting</span>
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">NL</div>
+                    <h4>Ndlangisa Lwandle</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">NM</div>
+                    <h4>Njabulo Madlala</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Physical Sciences</span>
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">NM</div>
+                    <h4>Nomonde Myende</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">English</span>
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course pink">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">NT</div>
+                    <h4>Nqobile Tenza</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Mathematics</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ef4444, #dc2626);">NM</div>
+                    <h4>Nqubeko Miya</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">OD</div>
+                    <h4>Olwethu Captain Duma</h4>
+                    <div class="tutor-courses">
+                       <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">PD</div>
+                    <h4>Mr Dumakude</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course pink">Accounting</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f97316, #ea580c);">SJ</div>
+                    <h4>Sbonelo Jobe</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course gold">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">SI</div>
+                    <h4>Simthandile Dlamini</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Life Sciences</span>
+                        <span class="tutor-course">Agricultural Sciences</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #a855f7, #9333ea);">SM</div>
+                    <h4>Sir Mtolo</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">Mathematical Literacy</span>
+                        <span class="tutor-course">Mathematics</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f43f5e, #e11d48);">SS</div>
+                    <h4>Sizwe Sithole</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #14b8a6, #0f766e);">SB</div>
+                    <h4>Syamthanda Bekwa</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Geography</span>
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">UM</div>
+                    <h4>Usphile Miya</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematical Literacy</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">ZN</div>
+                    <h4>Zamajola Lindelwa Ngqulunga</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course purple">Economics</span>
+                        <span class="tutor-course">Accounting</span>
+                        <span class="tutor-course pink">Business Studies</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">ZN</div>
+                    <h4>Zamayeyesa Londeka Ngqulunga</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course teal">Mathematical Literacy</span>
+                        <span class="tutor-course">Accounting</span>
+                        <span class="tutor-course">Business Studies</span>
+                    </div>
+                </div>
+                <div class="tutor-card fade-in">
+                    <div class="tutor-avatar" style="background: linear-gradient(135deg, #ef4444, #dc2626);">ZK</div>
+                    <h4>Zusiphe Khawula</h4>
+                    <div class="tutor-courses">
+                        <span class="tutor-course">Mathematics</span>
+                        <span class="tutor-course">Physical Sciences</span>
+                        <span class="tutor-course">Life Sciences</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training -->
+    <section class="training-section">
+        <div class="training-container">
+            <div class="section-header">
+                <div class="section-label">How We Prepare</div>
+                <h2>Well-Trained. <span>Battle-Ready.</span></h2>
+                <p>Every GHURU tutor undergoes rigorous preparation before they ever face a learner. We don't hire credentials — we build educators.</p>
+            </div>
+            <div class="training-grid">
+                <div class="training-card fade-in">
+                    <h3><span class="num">01</span> Pedagogical Training</h3>
+                    <p>Our tutors are trained in modern teaching methodologies — differentiated instruction, formative assessment, and scaffolded learning. They don't just know the content. They know how to teach it.</p>
+                    <ul>
+                        <li>Lesson planning & curriculum mapping</li>
+                        <li>Diagnostic assessment techniques</li>
+                        <li>Foundational gap identification</li>
+                        <li>Progressive skill building</li>
+                    </ul>
+                </div>
+                <div class="training-card fade-in">
+                    <h3><span class="num">02</span> Subject Mastery</h3>
+                    <p>Before tutoring any subject, our educators prove mastery through internal assessments. They stay current with curriculum changes, exam trends, and CAPS requirements.</p>
+                    <ul>
+                        <li>Internal subject competency tests</li>
+                        <li>CAPS curriculum alignment</li>
+                        <li>Past paper analysis & pattern recognition</li>
+                        <li>Continuous professional development</li>
+                    </ul>
+                </div>
+                <div class="training-card fade-in">
+                    <h3><span class="num">03</span> Mentorship & Shadowing</h3>
+                    <p>New tutors shadow experienced educators for their first month. They observe, practise, and receive feedback before leading their own sessions. No learner is a practice subject.</p>
+                    <ul>
+                        <li>4-week shadowing programme</li>
+                        <li>Peer review & feedback cycles</li>
+                        <li>Classroom management techniques</li>
+                        <li>Learner psychology & motivation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access -->
+    <section class="access-section">
+        <div class="access-container">
+            <div class="section-header">
+                <div class="section-label">Always Available</div>
+                <h2>Access That <span>Never Closes</span></h2>
+                <p>Education doesn't stop at 5pm. Neither do we. Our tutors are accessible when learners need them most.</p>
+            </div>
+            <div class="access-grid">
+                <div class="access-card fade-in">
+                    <h3>📱 WhatsApp Support</h3>
+                    <p>Stuck on a problem at 9pm? Message your tutor. Our team responds to learner queries outside of class hours because <span class="highlight">confusion doesn't wait for the next session</span>.</p>
+                </div>
+                <div class="access-card fade-in">
+                    <h3>💻 Online Classes — 7 Days a Week</h3>
+                    <p>Monday to Sunday, <span class="highlight">16:00 – 21:00</span>. Live, interactive, recorded for revision. No matter your schedule, there is a class for you.</p>
+                </div>
+                <div class="access-card fade-in">
+                    <h3>📝 Homework Hour — Daily</h3>
+                    <p>Monday to Friday, <span class="highlight">18:00 – 19:00</span>. Dedicated tutor-supervised time to complete homework. Get help the moment you get stuck.</p>
+                </div>
+                <div class="access-card fade-in">
+                    <h3>🌙 Cross Night & Cross Day Studies</h3>
+                    <p>Intensive full-day and evening sessions during holidays and exam periods. <span class="highlight">Extended hours, zero extra cost</span>. We stay until the last learner leaves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial-section">
+        <div class="testimonial-container">
+            <blockquote>"We do not settle for mediocrity because a child who has already waited ten years cannot afford wasted time. A learner finally beginning to believe in himself deserves adults who have already proven that belief can produce results."</blockquote>
+            <cite>— Mlondi Nzimande</cite>
+            <div class="role">Founder, Ghuru Smart Nation</div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>The Best Recruited People. Ready to Change Your Marks.</h2>
+        <p>45 tutors. 10+ schools. 1,000+ learners. And we're just getting started. Your transformation is one decision away.</p>
+        <a href="CONTACT.HTML" class="cta-btn">Start Your Journey</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">GHURU<span>.</span></div>
+        <p>Transforming education in KwaZulu-Natal, Eastern Cape, Gauteng and Western Cape since 2023</p>
+        <p>Cross Night Studies · Cross Day Studies · Online Classes · Exam Revision</p>
+        <div class="footer-schools">
+            <span>Dumabezwe High</span>
+            <span>Mdingi High</span>
+            <span>Dingeka High</span>
+            <span>Dlangani School</span>
+            <span>Masamini High</span>
+            <span>And More</span>
+        </div>
+    </footer>
+
+    <script>
+        function closeEventBar() { document.getElementById('eventBar').style.display = 'none'; }
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.getElementById('mobileToggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

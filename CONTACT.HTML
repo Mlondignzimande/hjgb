@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | GHURU Smart Nation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0a;
+            --accent: #c9a96e;
+            --accent-light: #e8d5a3;
+            --text: #f5f5f5;
+            --text-muted: #888;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #4ade80;
+            --deep-blue: #1e3a5f;
+
+            --white: #ffffff;
+            --red: #dc2626;
+            --blue-dark: #0f172a;
+            --blue-mid: #1e40af;
+            --blue-bright: #2563eb;
+            --blue-pale: #dbeafe;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === TOP EVENT BAR === */
+        .event-bar {
+            position: relative;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-bright) 100%);
+            padding: 14px 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .event-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-badge {
+            background: var(--red);
+            color: var(--white);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .event-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--white);
+        }
+
+        .event-text span {
+            color: var(--blue-pale);
+            font-weight: 600;
+        }
+
+        .event-cta {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .event-cta::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .event-cta:hover {
+            color: var(--blue-pale);
+        }
+
+        .event-cta:hover::after {
+            transform: translateX(4px);
+        }
+
+        .event-close {
+            position: absolute;
+            right: 40px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            padding: 4px;
+        }
+
+        .event-close:hover {
+            color: var(--white);
+        }
+
+        /* === NAVIGATION === */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(10, 22, 40, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066ff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--blue-bright);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--blue-dark);
+            background: var(--blue-pale);
+        }
+
+        .nav-link:hover::before {
+            width: 60%;
+        }
+
+        .nav-link.active {
+            color: var(--blue-bright);
+            background: var(--blue-pale);
+        }
+
+        .nav-link.active::before {
+            width: 60%;
+        }
+
+        .nav-link.special {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--blue-bright);
+        }
+
+        .nav-link.special:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0.08));
+            border-color: var(--blue-bright);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .nav-link .icon {
+            font-size: 1rem;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover .icon {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--blue-dark);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 16px 32px;
+            color: var(--blue-dark);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            background: linear-gradient(180deg, var(--blue-pale) 0%, var(--white) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--blue-dark);
+        }
+
+        .hero h1 span {
+            color: var(--blue-bright);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        /* === CONTACT INFO SECTION === */
+        .contact-info-section {
+            padding: 100px 40px;
+            background: var(--primary);
+        }
+
+        .contact-info-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .section-header h2 span {
+            color: var(--blue-bright);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .contact-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            text-align: center;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-card.featured {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
+            border-color: rgba(37, 99, 235, 0.25);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .contact-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .contact-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .contact-card .detail {
+            color: var(--blue-bright);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+
+        /* === CONTACT FORM SECTION === */
+        .form-section {
+            background: linear-gradient(180deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+            padding: 100px 40px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 14px 18px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue-bright);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+        }
+
+        .form-group select option {
+            background: var(--blue-dark);
+            color: var(--text);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(37, 99, 235, 0.3);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        /* === LOCATIONS SECTION === */
+        .locations-section {
+            padding: 100px 40px;
+            background: var(--primary);
+        }
+
+        .locations-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .location-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .location-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .location-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* === HOURS SECTION === */
+        .hours-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--blue-dark) 100%);
+            padding: 100px 40px;
+        }
+
+        .hours-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .hours-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .hours-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hours-card.featured {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
+            border-color: rgba(37, 99, 235, 0.25);
+        }
+
+        .hours-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hours-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-list li span.day {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .hours-list li span.time {
+            color: var(--blue-bright);
+            font-weight: 600;
+        }
+
+        /* === FAQ SECTION === */
+        .faq-section {
+            padding: 100px 40px;
+            background: var(--primary);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-list {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .faq-question {
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--blue-bright);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 30px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 30px 24px 30px;
+        }
+
+        .faq-answer p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+        }
+
+        .cta-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .cta-section .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--blue-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        .cta-section .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(201, 169, 110, 0.4);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .footer-logo span {
+            color: var(--red);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-schools {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .footer-schools span {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* === SCROLL ANIMATIONS === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .event-close {
+                right: 20px;
+            }
+
+            .event-content {
+                padding: 0 20px;
+                flex-wrap: wrap;
+                text-align: center;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: 1;
+            }
+
+            .locations-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-container {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .event-text {
+                font-size: 0.8rem;
+            }
+
+            .locations-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-card,
+            .hours-card,
+            .location-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Top Event Bar -->
+    <div class="event-bar" id="eventBar">
+        <div class="event-content">
+            <span class="event-badge">Upcoming</span>
+            <span class="event-text">
+                🚀 <span>10 Hours of Commerce, Humanities and Science 2026</span> — Dumabezwe High School, 5th July 2026, 7am-5pm
+            </span>
+            <a href="#" class="event-cta">Register Now</a>
+            <button class="event-close" onclick="closeEventBar()" aria-label="Close announcement">×</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="HOME.HTML" class="logo">
+                <img src="GHURU.png" alt="GHURU" class="logo-img">
+            </a>
+
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="HOME.HTML" class="nav-link">
+                        <span class="icon">⌂</span> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span class="icon"></span> About Us
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="SERVICES.HTML" class="nav-link">
+                        <span class="icon"></span> Our Services
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span class="icon"></span> Blog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="aps.html" class="nav-link special">
+                        <span class="icon"></span> APS Calculator
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="CONTACT.HTML" class="nav-link active">
+                        <span class="icon"></span> Contact Us
+                    </a>
+                </li>
+            </ul>
+
+            <button class="mobile-toggle" id="mobileToggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="HOME.HTML" class="nav-link">Home</a>
+        <a href="ABOUT_US.HTML" class="nav-link">About Us</a>
+        <a href="SERVICES.HTML" class="nav-link">Our Services</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="aps.html" class="nav-link special">APS Calculator</a>
+        <a href="CONTACT.HTML" class="nav-link active">Contact Us</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Let's Start a <span>Conversation</span></h1>
+        <p>Whether you're a parent looking for support, a learner ready to transform your results, or a school interested in partnership — we're here, and we're listening.</p>
+    </section>
+
+    <!-- Contact Info Section -->
+    <section class="contact-info-section">
+        <div class="contact-info-container">
+            <div class="section-header">
+                <div class="section-label">Reach Out</div>
+                <h2>Get in Touch <span>Today</span></h2>
+            </div>
+            <div class="contact-grid">
+                <a href="tel:0610924423" class="contact-card featured fade-in">
+                    <span class="contact-icon">📞</span>
+                    <h3>Call Us</h3>
+                    <p>Speak directly to our team. We're available during office hours and happy to answer any questions about our programmes.</p>
+                    <p class="detail">061 092 4423</p>
+                </a>
+                <a href="https://wa.me/27610924423" class="contact-card fade-in">
+                    <span class="contact-icon">💬</span>
+                    <h3>WhatsApp</h3>
+                    <p>Message us any time for quick responses. Perfect for busy parents and learners who prefer texting.</p>
+                    <p class="detail">061 092 4423</p>
+                </a>
+                <a href="mailto:admin@gsn.org.za" class="contact-card fade-in">
+                    <span class="contact-icon">✉️</span>
+                    <h3>Email Us</h3>
+                    <p>Send us detailed enquiries, documentation, or partnership proposals. We respond within 24 hours.</p>
+                    <p class="detail">admin@gsn.org.za</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="form-section">
+        <div class="form-container">
+            <div class="section-header">
+                <div class="section-label">Enquiry Form</div>
+                <h2>Send Us a <span>Message</span></h2>
+            </div>
+            <form class="form-grid" id="contactForm">
+                <div class="form-group fade-in">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Your first name" required>
+                </div>
+                <div class="form-group fade-in">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Your last name" required>
+                </div>
+                <div class="form-group fade-in">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="e.g. 061 092 4423" required>
+                </div>
+                <div class="form-group fade-in">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com">
+                </div>
+                <div class="form-group fade-in">
+                    <label for="grade">Grade / Level</label>
+                    <select id="grade" name="grade" required>
+                        <option value="" disabled selected>Select your grade</option>
+                        <option value="grade8">Grade 8</option>
+                        <option value="grade9">Grade 9</option>
+                        <option value="grade10">Grade 10</option>
+                        <option value="grade11">Grade 11</option>
+                        <option value="grade12">Grade 12</option>
+                        <option value="upgrading">Upgrading / Matric Rewrite</option>
+                        <option value="parent">Parent / Guardian</option>
+                        <option value="school">School Representative</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group fade-in">
+                    <label for="subject">Subject of Interest</label>
+                    <select id="subject" name="subject">
+                        <option value="" disabled selected>Select a subject</option>
+                        <option value="mathematics">Mathematics</option>
+                         <option value="techmathematics"> Technical Mathematics</option>
+                          <option value="techscience">Technical Sciences</option>
+                        <option value="mathlit">Mathematical Literacy</option>
+                        <option value="physicalscience">Physical Sciences</option>
+                        <option value="lifescience">Life Sciences</option>
+                        <option value="accounting">Accounting</option>
+                        <option value="economics">Economics</option>
+                        <option value="business">Business Studies</option>
+                        <option value="english">English</option>
+                        <option value="history">History</option>
+                        <option value="geography">Geography</option>
+                        <option value="multiple">Multiple Subjects</option>
+                        <option value="general">General Enquiry</option>
+                    </select>
+                </div>
+                <div class="form-group full-width fade-in">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your goals, challenges, or questions. The more detail, the better we can help."></textarea>
+                </div>
+                <button type="submit" class="submit-btn fade-in">Send Message →</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section class="locations-section">
+        <div class="locations-container">
+            <div class="section-header">
+                <div class="section-label">Our Schools</div>
+                <h2>We Serve <span>10+ Schools</span> Across KZN, GP, EC and WC.</h2>
+            </div>
+            <div class="locations-grid">
+                <div class="location-card fade-in">
+                    <span class="location-icon">🏫</span>
+                    <h3>Dumabezwe High</h3>
+                    <p>KwaZulu-Natal</p>
+                </div>
+                <div class="location-card fade-in">
+                    <span class="location-icon">🏫</span>
+                    <h3>Mdingi High</h3>
+                    <p>KwaZulu-Natal</p>
+                </div>
+                <div class="location-card fade-in">
+                    <span class="location-icon">🏫</span>
+                    <h3>Dingeka High</h3>
+                    <p>KwaZulu-Natal</p>
+                </div>
+                <div class="location-card fade-in">
+                    <span class="location-icon">🏫</span>
+                    <h3>Dlangani School</h3>
+                    <p>KwaZulu-Natal</p>
+                </div>
+                <div class="location-card fade-in">
+                    <span class="location-icon">🏫</span>
+                    <h3>Masamini High</h3>
+                    <p>KwaZulu-Natal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours Section -->
+    <section class="hours-section">
+        <div class="hours-container">
+            <div class="section-header">
+                <div class="section-label">Availability</div>
+                <h2>When to <span>Reach Us</span></h2>
+            </div>
+            <div class="hours-grid">
+                <div class="hours-card featured fade-in">
+                    <span class="hours-icon">💻</span>
+                    <h3>Online Classes</h3>
+                    <ul class="hours-list">
+                        <li><span class="day">Monday – Sunday</span><span class="time">16:00 – 21:00</span></li>
+                    </ul>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 16px; line-height: 1.6;">Live, interactive sessions with expert tutors. Recorded for revision.</p>
+                </div>
+                <div class="hours-card fade-in">
+                    <span class="hours-icon">📝</span>
+                    <h3>Homework Hour</h3>
+                    <ul class="hours-list">
+                        <li><span class="day">Monday – Friday</span><span class="time">18:00 – 19:00</span></li>
+                    </ul>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 16px; line-height: 1.6;">Dedicated tutor-supervised homework time. Get help the moment you get stuck.</p>
+                </div>
+                <div class="hours-card fade-in">
+                    <span class="hours-icon">☀️</span>
+                    <h3>Cross Day Studies</h3>
+                    <ul class="hours-list">
+                        <li><span class="day">School Holidays</span><span class="time">Full Day</span></li>
+                        <li><span class="day">Weekends</span><span class="time">Available</span></li>
+                    </ul>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 16px; line-height: 1.6;">Intensive full-day study marathons during holidays and select weekends.</p>
+                </div>
+                <div class="hours-card fade-in">
+                    <span class="hours-icon">🌙</span>
+                    <h3>Cross Night Studies</h3>
+                    <ul class="hours-list">
+                        <li><span class="day">Matric Candidates</span><span class="time">Evening – Late</span></li>
+                        <li><span class="day">Exam Periods</span><span class="time">Extended Hours</span></li>
+                    </ul>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 16px; line-height: 1.6;">Evening sessions stretching into the night for matrics and exam candidates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-header">
+                <div class="section-label">Common Questions</div>
+                <h2>Frequently Asked <span>Questions</span></h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        How do I enrol my child?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Simply call or WhatsApp us on 061 092 4423, or fill out the enquiry form above. We'll schedule a quick diagnostic assessment to understand your child's current level and create a personalised learning plan.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        What subjects do you offer?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We cover Mathematics, Mathematical Literacy, Physical Sciences, Life Sciences, Accounting, Economics, Business Studies, English, History, and Geography. We provide 3 structured lessons per week per subject with full curriculum coverage.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        How much does it cost?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our monthly fees range from R150 (Grade 8) to R400 (Upgrading), with 2 subjects included. Each additional subject is R100 per month. There are no hidden costs — Cross Night Studies, Cross Day Studies, and exam revision are all included.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Do you help with varsity applications?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes — and it's completely free for all GHURU members. We handle CAO applications, NSFAS, bursary forms, and direct university applications. We also provide career guidance to help learners choose the right path.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Can I join mid-term?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. We assess every learner individually and create a catch-up plan tailored to where you are. Whether it's Term 1 or Term 3, we'll get you up to speed and keep you there.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        What if my child is repeating a grade?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We specialise in helping repeat learners succeed. Our approach starts with a deep diagnostic to identify foundational gaps from previous grades, then we build upward. Many of our success stories began with learners who had repeated Grade 11 or 12.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Your Future Starts with One Decision</h2>
+        <p>Join 1000+ learners who chose consistency, support, and results. The tutor is waiting — are you ready?</p>
+        <a href="tel:0610924423" class="cta-btn">Call 061 092 4423</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">GHURU<span>.</span></div>
+        <p>Transforming education in KwaZulu-Natal, Western Cape, Eastern Cape and Gauteng since 2023</p>
+        <p>Cross Night Studies · Cross Day Studies · Online Classes · Exam Revision · Test Revision</p>
+        <div class="footer-schools">
+            <span>Dumabezwe High</span>
+            <span>Mdingi High</span>
+            <span>Dingeka High</span>
+            <span>Dlangani School</span>
+            <span>Masamini High</span>
+        </div>
+    </footer>
+
+    <script>
+        function closeEventBar() {
+            document.getElementById('eventBar').style.display = 'none';
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.getElementById('mobileToggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(faq => {
+                faq.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't already active
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Form submission handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            this.reset();
+        });
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

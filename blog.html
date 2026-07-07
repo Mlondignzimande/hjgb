@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | GHURU Smart Nation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0a;
+            --accent: #c9a96e;
+            --accent-light: #e8d5a3;
+            --text: #f5f5f5;
+            --text-muted: #888;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #4ade80;
+            --deep-blue: #1e3a5f;
+            --white: #ffffff;
+            --red: #dc2626;
+            --blue-dark: #0f172a;
+            --blue-mid: #1e40af;
+            --blue-bright: #2563eb;
+            --blue-pale: #dbeafe;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --pink: #ec4899;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === TOP EVENT BAR === */
+        .event-bar {
+            position: relative;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 50%, var(--blue-bright) 100%);
+            padding: 14px 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .event-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-badge {
+            background: var(--red);
+            color: var(--white);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .event-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--white);
+        }
+
+        .event-text span {
+            color: var(--blue-pale);
+            font-weight: 600;
+        }
+
+        .event-cta {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .event-cta::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .event-cta:hover {
+            color: var(--blue-pale);
+        }
+
+        .event-cta:hover::after {
+            transform: translateX(4px);
+        }
+
+        .event-close {
+            position: absolute;
+            right: 40px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+            padding: 4px;
+        }
+
+        .event-close:hover {
+            color: var(--white);
+        }
+
+        /* === NAVIGATION === */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 30px rgba(10, 22, 40, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066ff;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--blue-bright);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--blue-dark);
+            background: var(--blue-pale);
+        }
+
+        .nav-link:hover::before {
+            width: 60%;
+        }
+
+        .nav-link.active {
+            color: var(--blue-bright);
+            background: var(--blue-pale);
+        }
+
+        .nav-link.active::before {
+            width: 60%;
+        }
+
+        .nav-link.special {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--blue-bright);
+        }
+
+        .nav-link.special:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0.08));
+            border-color: var(--blue-bright);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.12);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--blue-dark);
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu .nav-link {
+            font-size: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 16px 32px;
+            color: var(--blue-dark);
+        }
+
+        /* === BLOG HERO === */
+        .blog-hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            background: linear-gradient(180deg, var(--blue-pale) 0%, var(--white) 100%);
+        }
+
+        .blog-hero .meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .blog-hero .meta span {
+            background: var(--blue-bright);
+            color: var(--white);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .blog-hero .meta .date {
+            background: transparent;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+        }
+
+        .blog-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--blue-dark);
+            max-width: 900px;
+        }
+
+        .blog-hero h1 span {
+            color: var(--blue-bright);
+        }
+
+        .blog-hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .blog-hero .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .blog-hero .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* === BREADCRUMB === */
+        .breadcrumb {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--blue-bright);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        /* === BLOG CONTENT === */
+        .blog-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 40px 100px;
+        }
+
+        .blog-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--text);
+            margin: 60px 0 20px;
+            line-height: 1.2;
+        }
+
+        .blog-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .blog-content h2 span {
+            color: var(--blue-bright);
+        }
+
+        .blog-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 40px 0 16px;
+        }
+
+        .blog-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .blog-content p strong {
+            color: var(--text);
+        }
+
+        .blog-content blockquote {
+            background: var(--glass);
+            border-left: 4px solid var(--blue-bright);
+            padding: 24px 28px;
+            margin: 32px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: var(--text);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .blog-content blockquote cite {
+            display: block;
+            margin-top: 12px;
+            font-style: normal;
+            font-size: 0.9rem;
+            color: var(--blue-bright);
+            font-weight: 600;
+        }
+
+        /* === BLOG IMAGES === */
+        .blog-image {
+            width: 100%;
+            border-radius: 16px;
+            margin: 32px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+        }
+
+        .blog-image-caption {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: -20px;
+            margin-bottom: 32px;
+            font-style: italic;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .image-grid img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .image-grid img:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .image-grid-3 img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .image-grid-3 img:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* === FEATURED STATS === */
+        .stats-highlight {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .stat-box .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--blue-bright);
+            line-height: 1;
+        }
+
+        .stat-box .label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* === TABLE === */
+        .principles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .principles-table th {
+            background: rgba(37, 99, 235, 0.1);
+            padding: 16px 20px;
+            text-align: left;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--blue-bright);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .principles-table td {
+            padding: 16px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .principles-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .principles-table td:first-child {
+            font-weight: 600;
+            color: var(--text);
+            width: 35%;
+        }
+
+        /* === CALLOUT BOXES === */
+        .callout {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 32px 0;
+        }
+
+        .callout h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--blue-bright);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .callout.warning {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.08), rgba(220, 38, 38, 0.02));
+            border-color: rgba(220, 38, 38, 0.2);
+        }
+
+        .callout.warning h4 {
+            color: var(--red);
+        }
+
+        .callout.success {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), rgba(74, 222, 128, 0.02));
+            border-color: rgba(74, 222, 128, 0.2);
+        }
+
+        .callout.success h4 {
+            color: var(--success);
+        }
+
+        .callout.gold {
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.08), rgba(201, 169, 110, 0.02));
+            border-color: rgba(201, 169, 110, 0.2);
+        }
+
+        .callout.gold h4 {
+            color: var(--accent);
+        }
+
+        /* === TAGS === */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 40px 0;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .tag {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .tag:hover {
+            border-color: var(--blue-bright);
+            color: var(--blue-bright);
+        }
+
+        /* === SHARE === */
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 40px 0;
+            padding: 24px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .share-section span {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            background: var(--blue-bright);
+            color: var(--white);
+            border-color: var(--blue-bright);
+        }
+
+        /* === POST DIVIDER === */
+        .post-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+            margin: 80px 0;
+            border: none;
+        }
+
+        /* === POST HEADER === */
+        .post-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .post-header .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .post-header .post-meta span {
+            background: var(--blue-bright);
+            color: var(--white);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .post-header .post-meta .date {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .post-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .post-header h2 span {
+            color: var(--blue-bright);
+        }
+
+        .post-header .post-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* === RELATED POSTS === */
+        .related-section {
+            background: linear-gradient(180deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+            padding: 80px 40px;
+        }
+
+        .related-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .related-section .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .related-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .related-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .related-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .related-card .category {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--blue-bright);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .related-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .related-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* === NEWSLETTER === */
+        .newsletter-section {
+            padding: 80px 40px;
+            background: var(--primary);
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .newsletter-section p {
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 14px 18px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--blue-bright);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .newsletter-form button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        /* === CTA SECTION === */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--deep-blue) 100%);
+        }
+
+        .cta-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .cta-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--blue-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(201, 169, 110, 0.3);
+        }
+
+        .cta-section .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(201, 169, 110, 0.4);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 60px 40px;
+            text-align: center;
+            background: var(--primary);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .footer-logo span {
+            color: var(--red);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-schools {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .footer-schools span {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* === SCROLL ANIMATIONS === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
+            .event-close { right: 20px; }
+            .event-content { padding: 0 20px; flex-wrap: wrap; text-align: center; }
+            .stats-highlight { grid-template-columns: 1fr; }
+            .related-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+            .principles-table td:first-child { width: 45%; }
+            .image-grid { grid-template-columns: 1fr; }
+            .image-grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .nav-container { padding: 0 20px; height: 70px; }
+            .logo-text { font-size: 1.3rem; }
+            .blog-hero { padding: 60px 20px 40px; }
+            .blog-content { padding: 30px 20px 60px; }
+            .breadcrumb { padding: 16px 20px; }
+            .principles-table th, .principles-table td { padding: 12px 14px; font-size: 0.85rem; }
+            .share-section { flex-direction: column; text-align: center; }
+            .related-grid { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .event-bar, .navbar, .mobile-toggle, .mobile-menu, .cta-section, .newsletter-section, .related-section, .footer { display: none !important; }
+            body { background: white; color: black; }
+            .blog-hero { background: white; min-height: auto; padding: 40px 20px; }
+            .blog-hero h1 { color: black; }
+            .blog-hero .subtitle { color: #333; }
+            .blog-content h2 { color: black; }
+            .blog-content p { color: #333; }
+            .blog-content blockquote { border-left: 3px solid #333; background: #f5f5f5; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Event Bar -->
+    <div class="event-bar" id="eventBar">
+        <div class="event-content">
+            <span class="event-badge">Upcoming</span>
+            <span class="event-text">🚀 <span>10 Hours of Commerce, Humanities and Science 2026</span> — Dumabezwe High School, 5th July 2026, 7am-5pm</span>
+            <a href="#" class="event-cta">Register Now</a>
+            <button class="event-close" onclick="closeEventBar()" aria-label="Close announcement">×</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="HOME.HTML" class="logo">
+                <img src="GHURU.png" alt="GHURU" class="logo-img">
+                <span class="logo-text">GHURU<span>.</span></span>
+            </a>
+            <ul class="nav-links">
+                <li class="nav-item"><a href="HOME.HTML" class="nav-link"><span class="icon">⌂</span> Home</a></li>
+                <li class="nav-item"><a href="ABOUT_US.HTML" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="SERVICES.HTML" class="nav-link">Our Services</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li class="nav-item"><a href="aps.html" class="nav-link special">APS Calculator</a></li>
+                <li class="nav-item"><a href="CONTACT.HTML" class="nav-link">Contact Us</a></li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="HOME.HTML" class="nav-link">Home</a>
+        <a href="ABOUT_US.HTML" class="nav-link">About Us</a>
+        <a href="SERVICES.HTML" class="nav-link">Our Services</a>
+        <a href="blog.html" class="nav-link active">Blog</a>
+        <a href="aps.html" class="nav-link special">APS Calculator</a>
+        <a href="CONTACT.HTML" class="nav-link">Contact Us</a>
+    </div>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="meta">
+            <span>Latest Stories</span>
+            <span class="date">GHURU Smart Nation Blog</span>
+        </div>
+        <h1>Stories of <span>Transformation</span>, Belief & Results</h1>
+        <p class="subtitle">Real learners. Real schools. Real change. These are the stories that define what happens when belief meets hard work.</p>
+        <div class="author">
+            <div class="author-avatar">NZ</div>
+            <div>
+                <div style="font-weight: 600; color: var(--blue-dark);">Mlondi Nzimande</div>
+                <div style="font-size: 0.8rem;">Founder, GHURU Smart Nation</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="HOME.HTML">Home</a>
+        <span>/</span>
+        <span style="color: var(--text-muted);">Blog</span>
+    </div>
+
+    <!-- BLOG POST 1: TERM 3 CROSS NIGHT -->
+    <article class="blog-content">
+        <div class="post-header">
+            <div class="post-meta">
+                <span>Recent Event</span>
+                <span class="date">June 2026</span>
+            </div>
+            <h2>Term 3 Cross Night: <span>300+ Learners</span> Under One Roof</h2>
+            <p class="post-subtitle">When the lights stay on until dawn and the calculators keep clicking — that is where magic happens. Our biggest cross night yet proved that belief, when multiplied by community, produces extraordinary results.</p>
+        </div>
+
+        <img src="pastevent.png" alt="GHURU Term 1 & 2 Revision Cross Night" class="blog-image">
+        <p class="blog-image-caption">GHURU Cross Night Study Session — where dedication meets results</p>
+
+        <h2>The Night That Redefined What Is Possible</h2>
+        <p>There are study sessions, and then there are <strong>movements</strong>. Our Term 3 Cross Night was the latter. Over <strong>300 learners</strong> gathered under one roof — not because they were forced to, but because they chose to. They chose to believe that one more hour, one more problem, one more revision session could be the difference between a pass and a distinction.</p>
+
+        <p>This was not just a tutoring session. This was a <strong>statement</strong>. A statement that learners across KwaZulu-Natal, Eastern Cape, Gauteng and Western Cape are hungry for success. A statement that when you provide the right environment — structured, supportive, and driven by belief — learners will show up in numbers that defy expectations.</p>
+
+        <div class="stats-highlight">
+            <div class="stat-box">
+                <div class="number">300+</div>
+                <div class="label">Learners Attended</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">10</div>
+                <div class="label">Hours of Study</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">45</div>
+                <div class="label">Tutors on Duty</div>
+            </div>
+        </div>
+
+        <h2>What Made This Cross Night Different</h2>
+        <p>Every cross night we host is special. But this one was different. The energy in the room was electric. Learners from <strong>Dumabezwe High, Mdingi High, Dingeka High, Dlangani School, and Masamini High</strong> sat side by side, sharing notes, solving problems together, and pushing each other to go further.</p>
+
+        <p>Our tutors — 45 experienced educators including varsity students who recently walked the matric path and employed teachers with <strong>100% pass rates</strong> — moved from table to table, not lecturing from the front, but <strong>sitting beside</strong> learners. Diagnosing gaps. Patching foundations. Building confidence one problem at a time.</p>
+
+        <div class="callout success">
+            <h4>💡 The GHURU Difference</h4>
+            <p>We don't replace school teachers. We <strong>amplify</strong> them. Our cross nights run alongside the incredible work that school teachers do every day — the early mornings, the extra classes, the weekend sessions. We add belief, knowledge, trust, and the kind of individual attention that overcrowded classrooms make difficult.</p>
+        </div>
+
+        <h2>A Tribute to the School Teachers Who Make This Possible</h2>
+        <p>Before we celebrate our results, we must celebrate the <strong>foundation</strong>. The school teachers at Dumabezwe High, Mdingi High, Dingeka High, Dlangani School, and Masamini High are the unsung heroes of every success story we tell.</p>
+
+        <p>These educators show up before sunrise. They stay after the bell rings. They sacrifice weekends for extra classes. They identify struggling learners and refuse to let them fall through the cracks. They are the first line of defence against failure — and they fight with everything they have.</p>
+
+        <blockquote>
+            "GHURU Smart Nation does not replace school teachers. We stand <strong>beside</strong> them. We add the belief, the knowledge, the trust, and the individual attention that transforms good learners into exceptional ones. Every distinction we celebrate is built on the foundation that school teachers laid."
+            <cite>— Mlondi Nzimande, Founder</cite>
+        </blockquote>
+
+        <p>Our cross nights are an <strong>extension</strong> of what happens in classrooms Monday to Friday. When school teachers cover the curriculum during the week, we provide the deep revision, the past paper practice, and the one-on-one clarification that cements understanding. When school teachers run extra classes on weekends, we provide the cross-night intensity that builds exam stamina. We are partners, not competitors.</p>
+
+        <h2>The Subjects That Filled the Room</h2>
+        <p>From <strong>Mathematics</strong> to <strong>Physical Sciences</strong>, from <strong>Accounting</strong> to <strong>Life Sciences</strong>, every subject table was packed. Learners brought their school notes, their textbooks, their past papers — and their <strong>questions</strong>. The kind of questions that only emerge when a learner has been thinking deeply, not just memorising.</p>
+
+        <p>Our tutors didn't just answer. They <strong>guided</strong>. They asked counter-questions. They made learners explain their own reasoning. They celebrated every "aha" moment like it was a goal in a World Cup final. Because to us, it is.</p>
+
+        <div class="image-grid">
+            <img src="mageba1.jpg" alt="Learner studying during cross night session">
+            <img src="mageba2.jpg" alt="Learner focused on mathematics problem solving">
+        </div>
+        <p class="blog-image-caption">Learners fully engaged during GHURU study sessions — focus, determination, and the pursuit of excellence</p>
+
+        <h2>From 6PM to 4AM: The Marathon of Belief</h2>
+        <p>Cross nights are not for the faint-hearted. They are <strong>marathons</strong>. Starting at 6PM and running deep into the early hours, they test endurance, discipline, and commitment. But they also build something invaluable: the confidence that comes from knowing you have <strong>prepared</strong>.</p>
+
+        <p>At 2AM, when most people are asleep, our learners were still solving equations. At 3AM, they were still debating literary themes. At 4AM, they were still practising accounting entries. Not because they had to — because they had <strong>chosen</strong> to become the kind of learner who outworks everyone else.</p>
+
+        <div class="callout gold">
+            <h4>🏆 The Result of Consistency</h4>
+            <p>Cross nights are not a one-time event. They are part of a <strong>system</strong> of support that includes daily online classes (Monday to Sunday, 16:00–21:00), Homework Hour (Monday to Friday, 18:00–19:00), and weekend revision sessions. This consistency is what transforms 23% into 68%. This is what gets learners into university.</p>
+        </div>
+
+        <h2>The Parents Who Believed</h2>
+        <p>Behind every learner in that room was a parent who said <strong>yes</strong>. Yes to the late night. Yes to the travel. Yes to the belief that their child could be more than their current marks suggested. Parents who trusted us with their most precious investment — their child's future.</p>
+
+        <p>To those parents: <strong>we see you</strong>. We know the sacrifices you make. The fees you stretch to afford. The hope you carry. We do not take it lightly. Every learner in that room is a promise we intend to keep.</p>
+
+        <h2>Looking Ahead: Term 3 and Beyond</h2>
+        <p>As Term 3 progresses, the pressure mounts. Preliminary exams approach. University application deadlines loom. The matric clock is ticking. But our learners are not afraid. They are <strong>ready</strong>.</p>
+
+        <p>Because they have spent nights like this one building the foundation. They have tutors who know their names, their struggles, and their potential. They have a community that believes in them. And they have the quiet confidence that comes from knowing they have <strong>outworked</strong> their fears.</p>
+
+        <p>The next cross night is already being planned. And if this one taught us anything, it's that the number 300 is just the <strong>beginning</strong>.</p>
+
+        <div class="tags">
+            <a href="#" class="tag">#CrossNight</a>
+            <a href="#" class="tag">#GHURUSmartNation</a>
+            <a href="#" class="tag">#Term3Revision</a>
+            <a href="#" class="tag">#300Learners</a>
+            <a href="#" class="tag">#KZNSchools</a>
+            <a href="#" class="tag">#StudyHard</a>
+            <a href="#" class="tag">#Matric2026</a>
+        </div>
+    </article>
+
+    <hr class="post-divider">
+
+    <!-- BLOG POST 2: VARSITY APPLICATIONS -->
+    <article class="blog-content">
+        <div class="post-header">
+            <div class="post-meta">
+                <span>Milestone</span>
+                <span class="date">May 2026</span>
+            </div>
+            <h2>108 Learners. <span>One Dream.</span> Varsity Applications 2026</h2>
+            <p class="post-subtitle">We didn't just tutor them. We walked them to the university gates. 108 learners applied for tertiary education across four provinces — and the journey is only beginning.</p>
+        </div>
+
+        <img src="pastevent3.png" alt="GHURU Varsity Applications Support" class="blog-image">
+        <p class="blog-image-caption">GHURU Varsity Applications — guiding learners from the classroom to the campus</p>
+
+        <h2>From the Classroom to the Campus</h2>
+        <p>There is a moment in every learner's journey when the classroom ends and the <strong>future</strong> begins. For 108 of our learners, that moment came this May when we sat down with them — one by one — and helped them apply for university.</p>
+
+        <p>Not just any applications. <strong>Strategic</strong> applications. Applications informed by APS score analysis, career guidance, and a deep understanding of what each learner is capable of achieving. Applications to universities across <strong>Eastern Cape, Gauteng, KwaZulu-Natal, and Western Cape</strong>.</p>
+
+        <div class="stats-highlight">
+            <div class="stat-box">
+                <div class="number">108</div>
+                <div class="label">Learners Applied</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">4</div>
+                <div class="label">Provinces Covered</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">100%</div>
+                <div class="label">Support Rate</div>
+            </div>
+        </div>
+
+        <h2>What It Takes to Apply for 108 Learners</h2>
+        <p>Varsity applications are not simple. They require certified ID copies, certified Grade 11 or Matric results, email addresses, phone numbers, and carefully considered career choices. For a learner navigating this alone, it can be overwhelming. For 108 learners, it is a <strong>logistical mountain</strong>.</p>
+
+        <p>But we climbed it together. Our team worked through each application with patience and precision. We explained the difference between a BCom and a BSc. We helped learners understand which programmes matched their APS scores. We made sure no learner applied blindly — every choice was <strong>informed</strong>, every form was complete, every dream was taken seriously.</p>
+
+        <div class="callout">
+            <h4>📋 What We Needed</h4>
+            <p>Certified ID copies. Certified Grade 11 or Matric results. Email addresses and phone numbers. Career choices that matched both passion and potential. And most importantly — <strong>belief</strong> that these learners deserved a seat in a lecture hall.</p>
+        </div>
+
+        <h2>The School Teachers Who Paved the Way</h2>
+        <p>None of these 108 applications would have been possible without the <strong>incredible work</strong> of school teachers across our partner schools. Teachers who stayed after hours for extra classes. Teachers who ran weekend revision sessions. Teachers who identified learners with university potential and pushed them to believe in themselves.</p>
+
+        <p>At <strong>Dumabezwe High</strong>, teachers have been running Saturday Mathematics clinics for years. At <strong>Mdingi High</strong>, educators sacrifice Sunday afternoons for Physical Sciences revision. At <strong>Dingeka High</strong>, the staff room lights stay on until 6PM every weekday for learners who need extra help. At <strong>Dlangani School</strong> and <strong>Masamini High</strong>, teachers don't just teach — they <strong>mentor</strong>.</p>
+
+        <blockquote>
+            "GHURU Smart Nation exists because of the foundation that school teachers build. We don't replace them — we <strong>extend</strong> their reach. When a teacher has 50 learners in a class, they can't give each one the individual attention they deserve. That's where we step in. We add the belief, the knowledge, the trust, and the focused attention that turns potential into results."
+            <cite>— Mlondi Nzimande, Founder</cite>
+        </blockquote>
+
+        <p>Every one of those 108 applications represents a learner who was first seen by a school teacher. Who was first believed in by a school teacher. Who was first taught the basics by a school teacher. We are merely the bridge that carries them from the school gate to the university door.</p>
+
+        <h2>The Provinces, The Dreams, The Future</h2>
+        <p>Our learners applied across four provinces because their dreams know no borders. Some want to study <strong>Medicine</strong> at UKZN. Others want <strong>Engineering</strong> at UJ. Some are reaching for <strong>Education</strong> at Fort Hare. Others want <strong>Business</strong> at UWC.</p>
+
+        <p>Each application is a <strong>declaration</strong>. A declaration that a child from a rural KZN school can become a doctor. That a learner from an under-resourced community can become an engineer. That the postcode of your birth does not determine the destination of your future.</p>
+
+        <div class="callout success">
+            <h4>✓ The GHURU Promise</h4>
+            <p>We don't stop at the application. We track every learner's acceptance. We help with bursary applications. We provide career guidance. We organise university visits. We are with them until they are <strong>seated in their first lecture</strong>.</p>
+        </div>
+
+        <h2>The Parents Who Dared to Dream</h2>
+        <p>Behind every application is a parent who said <strong>yes</strong> to a future they may never have had themselves. Parents who never went to university but want their children to. Parents who work multiple jobs to afford the R150–R400 monthly fee. Parents who trust us with their child's tomorrow.</p>
+
+        <p>To those parents: your courage is not unnoticed. Your sacrifice is not invisible. Every acceptance letter that arrives will carry your name on it, even if the university never knows it.</p>
+
+        <h2>Online: 01 May 2026</h2>
+        <p>Our varsity application support session was held online on <strong>01 May 2026</strong>, making it accessible to learners across all four provinces. The online format meant that no learner was left out because of distance. A learner in the Eastern Cape could receive the same guidance as one in Gauteng.</p>
+
+        <p>This is the <strong>power of technology</strong> combined with human care. Our online classes run Monday to Sunday, 16:00–21:00, and our Homework Hour provides daily support from 18:00–19:00. The varsity application session was an extension of this commitment — going beyond subjects to address the <strong>whole learner</strong>.</p>
+
+        <h2>What Happens Next</h2>
+        <p>The applications are in. Now we wait. But we don't wait passively. We prepare. We continue tutoring. We continue revising. We continue believing. Because an application is just a door — what matters is whether the learner is <strong>ready</strong> to walk through it.</p>
+
+        <p>For the Grade 12 learners who applied, the focus now shifts to the final exams. For the upgrading learners, the journey continues. For everyone, the message is the same: <strong>we are with you until the end</strong>.</p>
+
+        <p>108 learners. 108 dreams. 108 futures that will be different because someone believed in them. That is what GHURU Smart Nation is about.</p>
+
+        <div class="tags">
+            <a href="#" class="tag">#VarsityApplications</a>
+            <a href="#" class="tag">#108Learners</a>
+            <a href="#" class="tag">#GHURUSmartNation</a>
+            <a href="#" class="tag">#UniversityReady</a>
+            <a href="#" class="tag">#KZNMatric</a>
+            <a href="#" class="tag">#FutureDoctors</a>
+            <a href="#" class="tag">#FutureEngineers</a>
+        </div>
+    </article>
+
+    <hr class="post-divider">
+
+    <!-- BLOG POST 3: DR NDZ MATRIC AWARDS 2025 -->
+    <article class="blog-content">
+        <div class="post-header">
+            <div class="post-meta">
+                <span>Success Story</span>
+                <span class="date">January 2026</span>
+            </div>
+            <h2>DR NDZ Matric Awards 2025: <span>Five Stars</span>, One Story</h2>
+            <p class="post-subtitle">Zamajola, Zamayeyesa, Asiphile, Nqubeko, and Aphelele. Five learners. Five journeys. One undeniable truth: when belief meets hard work, distinctions follow.</p>
+        </div>
+
+        <div class="image-grid-3">
+            <img src="learner15.png" alt="Zamajola Ngqulunga - Position #1, 7 Distinctions, 89.14%">
+            <img src="learner16.png" alt="Zamayeyesa Ngqulunga - Position #6, 4 Distinctions, 83.86%">
+            <img src="learner17.png" alt="Asiphile Khwela - Position #2, 5 Distinctions, 84.14%">
+        </div>
+        <p class="blog-image-caption">DR NDZ Local Municipality Matric Awards 2025 — Top achievers from GHURU Smart Nation</p>
+
+        <div class="image-grid">
+            <img src="learner18.png" alt="Nqubeko Miya - Position #5, 5 Distinctions, 83.14%">
+            <img src="leearner19.png" alt="Aphelele Magoso - Position #7, 5 Distinctions, 83.14%">
+        </div>
+        <p class="blog-image-caption">More top achievers recognised at the DR NDZ Matric Awards 2025</p>
+
+        <h2>Five Names. One Movement.</h2>
+        <p>On a stage in the DR NDZ Local Municipality, five names were called. Not just any names — names that represent <strong>years of sacrifice</strong>, <strong>countless hours of study</strong>, and the quiet courage of learners who refused to give up on themselves. These are not just matric results. These are <strong>testaments</strong> to what happens when a community invests in its children.</p>
+
+        <p><strong>Zamajola Ngqulunga</strong> — Position #1, 7 Distinctions, Average 89.14%. <strong>Asiphile Khwela</strong> — Position #2, 5 Distinctions, Average 84.14%. <strong>Nqubeko Miya</strong> — Position #5, 5 Distinctions, Average 83.14%. <strong>Zamayeyesa Ngqulunga</strong> — Position #6, 4 Distinctions, Average 83.86%. <strong>Aphelele Magoso</strong> — Position #7, 5 Distinctions, Average 83.14%.</p>
+
+        <p>Five learners. A combined <strong>26 distinctions</strong>. An average that would make any school proud. But these numbers only tell part of the story.</p>
+
+        <div class="stats-highlight">
+            <div class="stat-box">
+                <div class="number">26</div>
+                <div class="label">Combined Distinctions</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">84.68%</div>
+                <div class="label">Average of Top 5</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">5</div>
+                <div class="label">Schools Represented</div>
+            </div>
+        </div>
+
+        <h2>The School Teachers Who Built the Foundation</h2>
+        <p>Before these learners ever walked into a GHURU session, they walked into classrooms led by <strong>extraordinary teachers</strong>. Teachers who arrived before the first bell. Teachers who stayed for extra classes when the day was supposed to end. Teachers who ran weekend revision sessions while their own families waited at home.</p>
+
+        <p>At the schools these learners come from — <strong>Dumabezwe High, Mdingi High, Dingeka High, Dlangani School, and Masamini High</strong> — the teaching staff does not see their job as a 9-to-5 obligation. They see it as a <strong>calling</strong>. They know that every learner who passes with a distinction is a life changed. Every learner who gets into university is a family lifted. Every learner who becomes a professional is a community transformed.</p>
+
+        <blockquote>
+            "These distinctions belong to the learners first, to their parents second, and to their school teachers third. GHURU Smart Nation is merely the <strong>amplifier</strong>. We take the foundation that school teachers build and we add the belief, the knowledge, the trust, and the individual attention that turns good learners into top achievers. We do not replace school teachers. We <strong>honour</strong> them."
+            <cite>— Mlondi Nzimande, Founder</cite>
+        </blockquote>
+
+        <p>The weekend classes. The after-school extra classes. The early morning revision sessions. The personal phone calls to parents when a learner is struggling. The extra worksheets printed with the teacher's own money. These are the invisible investments that produced these visible results. GHURU Smart Nation stands on the shoulders of these <strong>giants</strong>.</p>
+
+        <h2>The GHURU Layer: What We Added</h2>
+        <p>So what did GHURU Smart Nation contribute? We added four things that even the best school teachers struggle to provide in overcrowded classrooms:</p>
+
+        <ul style="color: var(--text-muted); margin: 20px 0 20px 24px; line-height: 1.8;">
+            <li><strong style="color: var(--text);">Belief</strong> — The unwavering conviction that every learner can pass with 60%+. Not just hope. Not just encouragement. The kind of belief that is backed by structured support, consistent presence, and a refusal to accept mediocrity.</li>
+            <li><strong style="color: var(--text);">Knowledge</strong> — Our 45 tutors include varsity students who recently mastered the same curriculum and employed teachers with 100% pass rates. They bring current, relevant, exam-focused knowledge that complements what school teachers cover.</li>
+            <li><strong style="color: var(--text);">Trust</strong> — The relationship between a tutor and a learner is built over months, not hours. Our monthly commitment model means tutors get to know their learners deeply — their fears, their strengths, their learning styles. This trust is the foundation of transformation.</li>
+            <li><strong style="color: var(--text);">Attention</strong> — In a school classroom of 50 learners, individual attention is a luxury. In a GHURU session, it is the standard. We diagnose gaps, patch foundations, and push each learner according to their unique needs.</li>
+        </ul>
+
+        <div class="callout gold">
+            <h4>🏆 The Partnership Model</h4>
+            <p>School teachers cover the curriculum. We provide the <strong>deep revision</strong>. School teachers run extra classes during the week. We run cross nights and weekend sessions. School teachers identify struggling learners. We provide the one-on-one intervention. Together, we are <strong>unstoppable</strong>.</p>
+        </div>
+
+        <h2>The Stories Behind the Names</h2>
+
+        <h3>Zamajola Ngqulunga — Position #1, 7 Distinctions, 89.14%</h3>
+        <p>Zamajola didn't just top the DR NDZ Local Municipality. She <strong>dominated</strong> it. Seven distinctions. An average of 89.14%. This is not luck. This is the result of years of consistent effort, supported by teachers who refused to let her settle, and GHURU tutors who pushed her to believe she could be the best.</p>
+
+        <p>Her journey was not without struggle. There were subjects she found difficult. There were moments when she questioned whether the effort was worth it. But she had something that cannot be taught in a textbook: <strong>resilience</strong>. And she had a support system — school teachers and GHURU tutors — who reminded her of her own strength every time she forgot it.</p>
+
+        <h3>Asiphile Khwela — Position #2, 5 Distinctions, 84.14%</h3>
+        <p>Asiphile's story is one of <strong>quiet determination</strong>. Not the loudest in the room. Not the first to raise a hand. But the one who stayed when everyone else left. The one who asked the extra question. The one who revised the chapter one more time.</p>
+
+        <p>Her school teachers saw this determination early. They channelled it. They gave her extra work. They challenged her. GHURU tutors added the structured revision, the past paper practice, and the confidence-building that turned her determination into <strong>distinctions</strong>.</p>
+
+        <h3>Nqubeko Miya — Position #5, 5 Distinctions, 83.14%</h3>
+        <p>Nqubeko represents the learners who don't start at the top. Who have to <strong>fight their way up</strong>. Who have to prove to themselves, and to everyone else, that they belong in the honours assembly.</p>
+
+        <p>His school teachers never gave up on him, even when his marks didn't reflect his potential. GHURU tutors provided the intensive, personalised support that helped him close the gap. The result: five distinctions and a place among the municipality's top achievers.</p>
+
+        <h3>Zamayeyesa Ngqulunga — Position #6, 4 Distinctions, 83.86%</h3>
+        <p>Zamayeyesa's journey reminds us that <strong>family support</strong> matters. With a sibling also achieving at the highest level, the Ngqulunga household became a study sanctuary. But it was the combination of dedicated school teachers and GHURU's extended support that turned family motivation into academic excellence.</p>
+
+        <h3>Aphelele Magoso — Position #7, 5 Distinctions, 83.14%</h3>
+        <p>Aphelele is proof that <strong>consistency compounds</strong>. She didn't have one breakthrough moment. She had a hundred small ones. Every extra class she attended. Every cross night she stayed for. Every WhatsApp question she sent at 9PM. They all added up.</p>
+
+        <p>Her school teachers provided the foundation. GHURU provided the extra layer of support that made the difference between passing and <strong>distinction</strong>. Between average and <strong>excellence</strong>.</p>
+
+        <h2>The Bigger Picture: What These Results Mean</h2>
+        <p>These five learners are not isolated success stories. They are <strong>proof of concept</strong>. Proof that the partnership between school teachers and GHURU Smart Nation works. Proof that learners from rural and under-resourced schools can compete with anyone. Proof that belief, knowledge, trust, and attention — when combined with hard work — produce extraordinary results.</p>
+
+        <p>But they are also a <strong>challenge</strong>. A challenge to every learner who is currently struggling. A challenge to every parent who is unsure whether the investment is worth it. A challenge to every school that wonders whether external support can really make a difference.</p>
+
+        <p>The answer is written in these five names. In these 26 distinctions. In these averages that would make any private school proud.</p>
+
+        <div class="callout success">
+            <h4>✓ A Message to Every Learner</h4>
+            <p>If Zamajola, Asiphile, Nqubeko, Zamayeyesa, and Aphelele can do it, <strong>so can you</strong>. Not because it is easy. Because it is possible. Because there are teachers who believe in you. Because there are tutors who will walk with you. Because you are capable of more than your current marks suggest.</p>
+        </div>
+
+        <h2>Looking Forward: Matric 2026</h2>
+        <p>As we celebrate the Class of 2025, our eyes are already on the Class of 2026. The learners currently in Grade 12. The ones who are sitting in classrooms right now, wondering if they have what it takes. The ones who are watching these results and asking themselves: <em>"Could that be me?"</em></p>
+
+        <p>The answer is <strong>yes</strong>. But it requires what these five learners gave: consistency, sacrifice, and the courage to ask for help. School teachers will provide the foundation. GHURU Smart Nation will provide the extra layer. But the learner must provide the <strong>commitment</strong>.</p>
+
+        <p>To the Class of 2026: your names could be on this stage next year. Your distinctions could be celebrated. Your story could inspire the next generation. The door is open. The tutors are ready. The only question is: <strong>are you?</strong></p>
+
+        <div class="tags">
+            <a href="#" class="tag">#DRNDZAwards</a>
+            <a href="#" class="tag">#Matric2025</a>
+            <a href="#" class="tag">#Distinctions</a>
+            <a href="#" class="tag">#GHURUSmartNation</a>
+            <a href="#" class="tag">#TopAchievers</a>
+            <a href="#" class="tag">#KZNSchools</a>
+            <a href="#" class="tag">#BelieveInChange</a>
+        </div>
+    </article>
+
+    <hr class="post-divider">
+
+    <!-- BLOG POST 4: THE STORY OF MAGEBA -->
+    <article class="blog-content">
+        <div class="post-header">
+            <div class="post-meta">
+                <span>Success Story</span>
+                <span class="date">26 May 2026</span>
+            </div>
+            <h2>A Man Can Change: The Story of <span>Mageba</span> and the Power of Belief</h2>
+            <p class="post-subtitle">For ten years, he lived in the shadows of his own potential. Then Term 1 happened — and everything changed.</p>
+        </div>
+
+        <div class="image-grid">
+            <img src="mageba1.jpg" alt="Mageba during a GHURU study session at Dingeka High">
+            <img src="mageba2.jpg" alt="Mageba focused on his studies during cross night">
+        </div>
+        <p class="blog-image-caption">Mageba during GHURU study sessions — the focus and determination that led to his transformation</p>
+
+        <h2>The Moment That Changed Everything</h2>
+        <p>There are moments in education that transcend report cards and rankings. Moments that remind us why we do this work. For the team at <strong>GHURU Smart Nation</strong>, one such moment came when we heard the name <strong>Mageba</strong> called during the Dingeka High School Term 1 honours assembly.</p>
+
+        <div class="stats-highlight">
+            <div class="stat-box">
+                <div class="number">5</div>
+                <div class="label">Position in Class</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">10</div>
+                <div class="label">Years of Silence</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">1</div>
+                <div class="label">Moment of Decision</div>
+            </div>
+        </div>
+
+        <p>For most learners, a Top 10 position would be a proud achievement. For Mageba, it was a <strong>resurrection</strong>.</p>
+
+        <h2>Ten Years in the Shadows</h2>
+        <p>Mageba is a Grade 12 learner at <strong>Dingeka High School</strong> in KwaZulu-Natal. But his story doesn't begin in matric. It begins ten years ago — in <strong>Grade 2</strong>. That was the last time his name appeared among the top learners. The last time he stood in the light of recognition.</p>
+
+        <p>What followed was a decade of silence.</p>
+
+        <blockquote>
+            "Ten years of watching others celebrated while his own name remained unheard. Ten years of report cards that whispered 'not enough.'"
+            <cite>— Ghuru Smart Nation, Issue 26 May 2026</cite>
+        </blockquote>
+
+        <p>For ten years, Mageba lived in the shadows of his own potential. He became invisible in a system that often has too many learners and too little time. He internalised a narrative that told him academic success was for other people — not for him.</p>
+
+        <p>Until Term 1 of 2026, when something shifted.</p>
+
+        <h2>Not Luck. Not Chance. <span>A Decision.</span></h2>
+        <p>Mageba's breakthrough wasn't accidental. It wasn't a sudden stroke of genius or a lucky exam paper. It was the result of a single, powerful decision:</p>
+
+        <div class="callout success">
+            <h4>💡 The Turning Point</h4>
+            <p>He turned toward himself and believed it was not too late to become who he was always meant to be.</p>
+        </div>
+
+        <p>This is the core truth that Ghuru Smart Nation was built on: <strong>transformation is always possible.</strong> No matter how many years have passed. No matter how many times a learner has been told — directly or indirectly — that they are not enough.</p>
+
+        <p>The belief that change is possible is not naive optimism. It is the foundation of everything we do.</p>
+
+        <h2>The School Teachers Who Never Gave Up</h2>
+        <p>Before Mageba ever walked into a GHURU session, there were teachers at <strong>Dingeka High School</strong> who saw something in him that he couldn't see in himself. Teachers who marked his homework with extra care. Teachers who called him to their desks after class. Teachers who ran weekend revision sessions and made sure he was there.</p>
+
+        <p>These educators are the <strong>unsung heroes</strong> of Mageba's story. They are the ones who kept the door open when he was ready to walk through it. They are the ones who laid the foundation that GHURU tutors could build upon. They are the ones who, year after year, refused to let him disappear into the background.</p>
+
+        <blockquote>
+            "The teachers at Dingeka High School are not just educators — they are <strong>architects of futures</strong>. They arrive early. They stay late. They run extra classes on weekends when they should be with their families. They do this not for recognition, but because they understand what is at stake. Every learner who passes is a life changed. Every learner who fails is a dream deferred."
+            <cite>— Mlondi Nzimande, Founder</cite>
+        </blockquote>
+
+        <p>GHURU Smart Nation does not replace these teachers. We <strong>stand beside</strong> them. When a Dingeka High teacher covers the curriculum during the week, we provide the intensive revision during cross nights. When a teacher identifies a gap in Mageba's understanding, we provide the one-on-one time to close it. When a teacher runs out of hours in the day, we extend the day.</p>
+
+        <p>This is the <strong>partnership model</strong> that produced Mageba's transformation. School teachers provide the foundation. GHURU provides the belief, the knowledge, the trust, and the individual attention that turns potential into results.</p>
+
+        <h2>The Ghuru Smart Nation Difference: A Sanctuary, Not Just Extra Classes</h2>
+        <p>What makes Mageba's story particularly powerful is what happened <em>after</em> he made that decision. He didn't just study harder in isolation. He walked into a space specifically designed to meet learners exactly where they are.</p>
+
+        <p>Mageba's daily routine is staggering:</p>
+
+        <div class="stats-highlight">
+            <div class="stat-box">
+                <div class="number">10</div>
+                <div class="label">Hours at School</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">3-6</div>
+                <div class="label">Hours at GHURU</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">16</div>
+                <div class="label">Total Hours Daily</div>
+            </div>
+        </div>
+
+        <p>While others rest, he keeps fighting for the future he once thought belonged to other people.</p>
+
+        <p>But raw hours alone don't explain his transformation. What matters is <strong>what happens in those hours</strong> — and <strong>who he meets when he arrives</strong>.</p>
+
+        <h2>The Tutors Who Refuse Mediocrity</h2>
+        <p>Ghuru Smart Nation is not a collection of casual tutors. It is a sanctuary built by experienced educators who understand what is at stake:</p>
+
+        <ul style="color: var(--text-muted); margin: 20px 0 20px 24px; line-height: 1.8;">
+            <li><strong style="color: var(--text);">Varsity students</strong> who remember the battlefield of matric and can relate to the pressure</li>
+            <li><strong style="color: var(--text);">Employed teachers</strong> with real classroom experience and proven track records — many having achieved <strong>100% pass rates</strong> for multiple years</li>
+        </ul>
+
+        <p>This combination is deliberate. Learners need both:</p>
+        <ul style="color: var(--text-muted); margin: 20px 0 20px 24px; line-height: 1.8;">
+            <li><strong style="color: var(--text);">Relatability</strong> — someone who recently walked the same path</li>
+            <li><strong style="color: var(--text);">Credibility</strong> — someone who has consistently produced results</li>
+        </ul>
+
+        <blockquote>
+            "We do not settle for mediocrity because a child who has already waited ten years cannot afford wasted time. A learner finally beginning to believe in himself deserves adults who have already proven that belief can produce results."
+            <cite>— Mlondi Nzimande, Founder</cite>
+        </blockquote>
+
+        <h2>Why This Story <span>Matters Now</span></h2>
+        <p>Mageba's journey is not just one learner's success. It is a mirror held up to the South African education landscape — and a challenge to all of us.</p>
+
+        <h3>The Hidden Crisis: Dreams That Die Quietly</h3>
+        <p>Across KwaZulu-Natal and beyond, thousands of learners sit in overcrowded classrooms, their potential unseen, their struggles unaddressed. They don't fail loudly. They fade quietly. They become statistics before they ever had a chance to become success stories.</p>
+
+        <p>Ghuru Smart Nation exists because we refuse to accept this as inevitable.</p>
+
+        <div class="callout warning">
+            <h4>⚠️ The Reality</h4>
+            <p>We know the pain of decade-long silence. We know how many dreams die quietly in plain sight. And we <strong>refuse</strong> to let another Mageba wait ten years to be seen, guided, and served by anything less than excellence.</p>
+        </div>
+
+        <h2>The Bigger Picture: What Term 2 Holds</h2>
+        <p>Mageba's Term 1 breakthrough was not the finish line. It was the starting gun.</p>
+
+        <blockquote>
+            "So let them watch Term 2. Let them watch what happens when a young man who has finally tasted his own power becomes hungry for more."
+            <cite>— Ghuru Smart Nation</cite>
+        </blockquote>
+
+        <p>This is the psychology of transformation that GHURU understands deeply. The first success is the hardest. It breaks a psychological barrier. Once a learner realises <em>"I can do this,"</em> the second success becomes easier. The third, expected. Momentum builds. Belief compounds.</p>
+
+        <p>Mageba is no longer fighting to prove he belongs. He is fighting to see how far he can go.</p>
+
+        <h2>A Message to Every Learner Who Feels <span>Invisible</span></h2>
+        <p>If you are reading this and you see yourself in Mageba's story — the years of silence, the feeling of being unseen, the quiet belief that maybe success is for other people — hear this:</p>
+
+        <div class="callout success">
+            <h4>✓ You Can Change Too</h4>
+            <p><strong>A man can change. We have seen it.</strong> Not once. Not occasionally. Repeatedly. Consistently. In learners who had given up on themselves before we ever gave up on them.</p>
+        </div>
+
+        <p>The path is not easy. Mageba's 13-16 hour days are not sustainable for everyone, and they are not required. What <em>is</em> required is:</p>
+
+        <ul style="color: var(--text-muted); margin: 20px 0 20px 24px; line-height: 1.8;">
+            <li><strong style="color: var(--text);">Consistency</strong> — showing up, even when progress feels invisible</li>
+            <li><strong style="color: var(--text);">Support</strong> — finding people who believe in you before you believe in yourself</li>
+            <li><strong style="color: var(--text);">Time</strong> — giving yourself permission to be a beginner again</li>
+        </ul>
+
+        <h2>A Message to Parents, Educators, and Communities</h2>
+        <p>Mageba's story is also a reminder of what is possible when we invest in structured, sustained educational support.</p>
+
+        <p>The South African education system faces enormous challenges:</p>
+        <ul style="color: var(--text-muted); margin: 20px 0 20px 24px; line-height: 1.8;">
+            <li>Overcrowded classrooms</li>
+            <li>Limited individual attention</li>
+            <li>Resource constraints</li>
+            <li>Learners falling through cracks that are sometimes years wide</li>
+        </ul>
+
+        <p>Organisations like Ghuru Smart Nation — which has tutored and visited <strong>18 schools in KwaZulu-Natal, 7 schools in Gauteng and 2 Schools in Western Cape</strong> (ie Dumabezwe High, Mdingi High, Dingeka High, Dlangani School, and Masamini High) — exist to fill those gaps. But we cannot do it alone.</p>
+
+        <p>Every parent who enrols a child. Every school that partners with us. Every community member who spreads the word. You are part of this story.</p>
+
+        <h2>The Philosophy Behind <span>the Results</span></h2>
+        <p>GHURU Smart Nation's approach is rooted in a few non-negotiable principles:</p>
+
+        <table class="principles-table">
+            <thead>
+                <tr>
+                    <th>Principle</th>
+                    <th>What It Means in Practice</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Commitment</td>
+                    <td>Not hourly tutoring. Sustained, predictable support that builds relationships and tracks progress over time.</td>
+                </tr>
+                <tr>
+                    <td>Diagnostic First</td>
+                    <td>We don't assume. We assess. Every learner gets a personalised starting point.</td>
+                </tr>
+                <tr>
+                    <td>Foundation Before Speed</td>
+                    <td>We patch gaps from previous grades before pushing new content.</td>
+                </tr>
+                <tr>
+                    <td>All Resources Provided</td>
+                    <td>Study guides, past papers, summary notes, video recordings — no extra costs.</td>
+                </tr>
+                <tr>
+                    <td>Beyond the Classroom</td>
+                    <td>APS tracking, varsity applications, bursary support, career guidance.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>This is what it takes to transform a learner like Mageba. Not a single intervention. A <strong>system of support</strong>.</p>
+
+        <h2>Looking Forward: The Term 2 Challenge</h2>
+        <p>As we publish this in May 2026, Term 2 is underway. The preliminary exams are approaching. The pressure is mounting. For many Grade 12 learners, this is the term that determines whether they qualify for university, diploma programmes, or need to consider alternative pathways.</p>
+
+        <p>For Mageba, it is the term that will show whether his Term 1 breakthrough was a moment or a movement.</p>
+
+        <p>We are betting on the latter.</p>
+
+        <p>And we are betting on every other learner who walks through our doors with a story similar to his — ten years of silence, one moment of decision, and the courage to keep showing up.</p>
+
+        <h2>How to Get <span>Involved</span></h2>
+
+        <div class="callout">
+            <h4>📚 For Learners</h4>
+            <p>Struggling with Mathematics, Physical Sciences, Accounting, Economics, or any of our covered subjects? It is not too late. Our online classes run <strong>Monday to Sunday, 16:00–21:00</strong>, and our Homework Hour provides daily support from <strong>18:00–19:00</strong>.</p>
+        </div>
+
+        <div class="callout">
+            <h4>👨‍👩‍👧 For Parents</h4>
+            <p>Watching your child lose confidence, repeating grades, or simply not reaching their potential? Reach out. Our monthly fees start at <strong>R150 for Grade 8</strong> and go up to <strong>R400 for upgrading learners</strong>, with two subjects included and additional subjects at R100 each.</p>
+        </div>
+
+        <div class="callout">
+            <h4>🏫 For Schools</h4>
+            <p>Interested in partnership? We are expanding. Our model is built on collaboration, not competition. We add belief, knowledge, trust, and attention to the incredible foundation that school teachers already build.</p>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px;"><strong>Contact us:</strong></p>
+        <p style="text-align: center;">📞 <strong>Call/WhatsApp:</strong> 061 092 4423<br>✉️ <strong>Email:</strong> admin@gsn.org.za</p>
+
+        <h2>Final Word</h2>
+        <p>Mageba's story is not finished. It is only beginning.</p>
+
+        <blockquote>
+            "A man can change — I have seen it. And Mageba? Mageba is only beginning."
+            <cite>— Mlondi Nzimande</cite>
+        </blockquote>
+
+        <p>To every learner who has ever felt that their name would never be called, that their effort would never be seen, that their potential would never be realised: <strong>your story is not over.</strong></p>
+
+        <p>The door is open. The tutors are waiting. And we believe — with every part of our organisation — that <strong>you can change too.</strong></p>
+
+        <!-- Tags -->
+        <div class="tags">
+            <a href="#" class="tag">#AManCanChange</a>
+            <a href="#" class="tag">#GHURUSmartNation</a>
+            <a href="#" class="tag">#EducationTransformation</a>
+            <a href="#" class="tag">#KZNSchools</a>
+            <a href="#" class="tag">#SA_Schools</a>
+            <a href="#" class="tag">#BelieveInChange</a>
+            <a href="#" class="tag">#GautengSchools</a>
+            <a href="#" class="tag">#SuccessStory</a>
+        </div>
+
+        <!-- Share -->
+        <div class="share-section">
+            <span>Share this story:</span>
+            <div class="share-buttons">
+                <a href="#" class="share-btn" title="Share on WhatsApp">📱</a>
+                <a href="#" class="share-btn" title="Share on Facebook">f</a>
+                <a href="#" class="share-btn" title="Share on X">𝕏</a>
+                <a href="#" class="share-btn" title="Copy Link">🔗</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Related Posts -->
+    <section class="related-section">
+        <div class="related-container">
+            <div class="section-header">
+                <h2>More Stories That Inspire</h2>
+            </div>
+            <div class="related-grid">
+                <a href="#" class="related-card">
+                    <span class="category">Recent Event</span>
+                    <h3>Term 3 Cross Night: 300+ Learners Under One Roof</h3>
+                    <p>Our biggest cross night yet — where dedication, community, and belief produced a night that redefined what is possible in rural education.</p>
+                </a>
+                <a href="#" class="related-card">
+                    <span class="category">Milestone</span>
+                    <h3>108 Learners Applied for Varsity: The Journey to University</h3>
+                    <p>From the classroom to the campus — how we walked 108 learners through their varsity applications across four provinces.</p>
+                </a>
+                <a href="#" class="related-card">
+                    <span class="category">Success Story</span>
+                    <h3>DR NDZ Matric Awards 2025: Five Stars, One Story</h3>
+                    <p>Zamajola, Zamayeyesa, Asiphile, Nqubeko, and Aphelele — five learners who proved that distinctions are possible when belief meets hard work.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <h2>Never Miss a Story</h2>
+            <p>Subscribe to the GHURU Smart Nation blog for weekly success stories, study tips, and educational insights.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Your Story Could Be Next</h2>
+        <p>Join 1000+ learners who chose consistency, support, and results. The tutor is waiting — are you ready?</p>
+        <a href="CONTACT.HTML" class="cta-btn">Start Your Journey</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">GHURU<span>.</span></div>
+        <p>Transforming education in KwaZulu-Natal, Eastern Cape, Gauteng and Western Cape since 2023</p>
+        <p>Cross Night Studies · Cross Day Studies · Online Classes · Exam Revision</p>
+        <div class="footer-schools">
+            <span>Dumabezwe High</span>
+            <span>Mdingi High</span>
+            <span>Dingeka High</span>
+            <span>Dlangani School</span>
+            <span>Masamini High</span>
+        </div>
+    </footer>
+
+    <script>
+        function closeEventBar() {
+            document.getElementById('eventBar').style.display = 'none';
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.getElementById('mobileToggle');
+            menu.classList.toggle('open');
+            toggle.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
